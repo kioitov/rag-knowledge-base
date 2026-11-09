@@ -161,10 +161,16 @@ TEST_QUERIES = [
 ]
 
 
+def _default_pdf() -> Path:
+    docs = Path(__file__).resolve().parent.parent / "data" / "docs"
+    pdfs = sorted(docs.rglob("*.pdf")) if docs.exists() else []
+    if not pdfs:
+        raise SystemExit(f"没找到 PDF。把文件放进 {docs}/ 即可（支持子目录）。")
+    return pdfs[0]
+
+
 def main() -> None:
-    pdf = Path(
-        r"E:\deepseek work\融销通项目\成果文档\软件需求规格说明书\融销通平台软件需求规格说明书.pdf"
-    )
+    pdf = Path(sys.argv[1]) if len(sys.argv) > 1 else _default_pdf()
     chunks = build_chunks(pdf, strategy="paragraph")
     print(f"文档：{pdf.name}")
     print(f"块数：{len(chunks)}（正文 {sum(1 for c in chunks if c.kind=='text')} / 表格 {sum(1 for c in chunks if c.kind=='table')}）")

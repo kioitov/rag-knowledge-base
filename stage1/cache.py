@@ -118,11 +118,18 @@ def clear_cache() -> int:
 
 
 if __name__ == "__main__":
+    import sys
     import time
 
-    pdf = Path(
-        r"E:\deepseek work\融销通项目\成果文档\系统详细设计文档\融销通平台系统详细设计文档.pdf"
-    )
+    if len(sys.argv) > 1:
+        pdf = Path(sys.argv[1])
+    else:
+        docs = Path(__file__).resolve().parent.parent / "data" / "docs"
+        pdfs = sorted(docs.rglob("*.pdf")) if docs.exists() else []
+        if not pdfs:
+            raise SystemExit(f"没找到 PDF。把文件放进 {docs}/ 即可（支持子目录）。")
+        pdf = pdfs[0]
+
     print("首次（现算）：")
     t0 = time.perf_counter()
     cs1 = load_chunks(pdf)

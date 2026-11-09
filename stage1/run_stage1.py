@@ -28,14 +28,27 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cache import load_chunks
 from retriever import KeywordIndex
 
-DOC_DIR = Path(r"E:\deepseek work\融销通项目\成果文档")
+# 文档目录：默认用仓库内的 data/docs，可用 --docs 覆盖
+# 目录结构：data/docs/<任意子目录>/<任意文件名>.pdf
+DOC_DIR = Path(__file__).resolve().parent.parent / "data" / "docs"
 
-DOCS = [
-    DOC_DIR / "可行性研究报告" / "融销通平台可行性研究报告.pdf",
-    DOC_DIR / "软件需求规格说明书" / "融销通平台软件需求规格说明书.pdf",
-    DOC_DIR / "系统概要设计说明书" / "融销通平台系统概要设计说明书.pdf",
-    DOC_DIR / "系统详细设计文档" / "融销通平台系统详细设计文档.pdf",
+# 兼容旧的固定文件名布局；找不到时自动扫描 data/docs 下所有 PDF
+LEGACY_LAYOUT = [
+    ("可行性研究报告", "可行性研究报告.pdf"),
+    ("软件需求规格说明书", "软件需求规格说明书.pdf"),
+    ("系统概要设计说明书", "系统概要设计说明书.pdf"),
+    ("系统详细设计文档", "系统详细设计文档.pdf"),
 ]
+
+
+def discover_docs(doc_dir: Path) -> list[Path]:
+    """优先按旧布局找；找不到就递归扫描所有 PDF。"""
+    if not doc_dir.exists():
+        return []
+    legacy = [doc_dir / sub / name for sub, name in LEGACY_LAYOUT]
+    if all(p.exists() for p in legacy):
+        return legacy
+    return sorted(doc_dir.rglob("*.pdf"))
 
 
 def build_index(docs: list[Path], strategy: str, size: int, overlap: int,
@@ -89,11 +102,20 @@ def main() -> None:
     ap.add_argument("--overlap", type=int, default=60)
     ap.add_argument("--top-k", type=int, default=3)
     ap.add_argument("--dump", type=int, default=0, help="打印前 N 个块原文，人工验切分")
-    ap.add_argument("--all-docs", action="store_true", help="用全部 4 份 PDF 建索引")
+    ap.add_argument("--all-docs", action="store_true", help="用目录下全部 PDF 建索引")
     ap.add_argument("--no-cache", action="store_true", help="禁用解析缓存")
+    ap.add_argument("--docs", default=str(DOC_DIR), help="PDF 所在目录，默认 data/docs")
     args = ap.parse_args()
 
-    docs = DOCS if args.all_docs else [DOCS[1]]  # 默认只用需求规格说明书，快
+    doc_dir = Path(args.docs)
+    all_docs = discover_docs(doc_dir)
+    if not all_docs:
+        print(f"[ERROR] 在 {doc_dir} 下没找到 PDF。")
+        print("        把待检索的 PDF 放进 data/docs/ 即可（支持子目录）。")
+        return
+
+    # 默认只用第一份，快；--all-docs 用全部
+    docs = all_docs if args.all_docs else [all_docs[0]]
 
     print("=" * 94)
     print(f" 阶段 1 · 切块 + 检索验收")

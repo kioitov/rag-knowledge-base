@@ -7,8 +7,8 @@
     这些问题不解决，切块调参就是瞎调。
 
 用法：
-    python stage1\\peek_text.py            # 默认看需求规格说明书第 5 页
-    python stage1\\peek_text.py 5 12       # 看第 5~12 页
+    python stage1/peek_text.py            # 默认看第 5 页
+    python stage1/peek_text.py 5 12       # 看第 5~12 页
 """
 
 from __future__ import annotations
@@ -22,15 +22,26 @@ if hasattr(sys.stdout, "reconfigure"):
 import pymupdf
 
 ROOT = Path(__file__).resolve().parent.parent
-PDF = Path(r"E:\deepseek work\融销通项目\成果文档\软件需求规格说明书\融销通平台软件需求规格说明书.pdf")
+DOC_DIR = ROOT / "data" / "docs"
+
+
+def _first_pdf() -> Path:
+    pdfs = sorted(DOC_DIR.rglob("*.pdf")) if DOC_DIR.exists() else []
+    if not pdfs:
+        raise SystemExit(f"没找到 PDF。把文件放进 {DOC_DIR}/ 即可（支持子目录）。")
+    return pdfs[0]
+
+
+PDF = None  # 由 main 惰性获取
 
 
 def main() -> None:
     start = int(sys.argv[1]) if len(sys.argv) > 1 else 5
     end = int(sys.argv[2]) if len(sys.argv) > 2 else start + 1
 
-    doc = pymupdf.open(PDF)
-    print(f"文件：{PDF.name}  共 {len(doc)} 页")
+    pdf = _first_pdf()
+    doc = pymupdf.open(pdf)
+    print(f"文件：{pdf.name}  共 {len(doc)} 页")
     print(f"查看第 {start} ~ {end - 1} 页（0 基索引）")
     print("=" * 90)
 

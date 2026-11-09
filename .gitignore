@@ -9,15 +9,18 @@ venv/
 .env
 
 # 数据与产物
-data/
+data/cache/
+data/docs/**/*.pdf
+docs_local/
 *.chroma/
 chroma_db/
 *.log
+
+# 个人素材：含本机路径与内部文档名，不公开
+NOTES.md
+docs/*.pdf
 
 # 编辑器
 .vscode/
 .idea/
 .DS_Store
-
-# 我的问题日志不入库（个人素材，含路径信息）
-NOTES.md
