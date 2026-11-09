@@ -8,7 +8,7 @@
 
 用法：
     python stage1\\run_stage1.py                     # 默认策略 + 5 个内置问题
-    python stage1\\run_stage1.py -q "还款方式有哪些"
+    python stage1\\run_stage1.py -q "系统采用什么架构"
     python stage1\\run_stage1.py --strategy section
     python stage1\\run_stage1.py --dump 10           # 打印前 10 个块，人工验切分
     python stage1\\run_stage1.py --all-docs          # 4 份 PDF 全建索引
@@ -24,30 +24,26 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from cache import load_chunks
 from retriever import KeywordIndex
 
 # 文档目录：默认用仓库内的 data/docs，可用 --docs 覆盖
-# 目录结构：data/docs/<任意子目录>/<任意文件名>.pdf
 DOC_DIR = Path(__file__).resolve().parent.parent / "data" / "docs"
 
+# 报错提示里只用相对路径，不打印绝对路径
+docs_hint = "data/docs/"
+
 # 兼容旧的固定文件名布局；找不到时自动扫描 data/docs 下所有 PDF
-LEGACY_LAYOUT = [
-    ("可行性研究报告", "可行性研究报告.pdf"),
-    ("软件需求规格说明书", "软件需求规格说明书.pdf"),
-    ("系统概要设计说明书", "系统概要设计说明书.pdf"),
-    ("系统详细设计文档", "系统详细设计文档.pdf"),
-]
+# 注意：这里只为兼容既有语料目录结构，不含任何具体业务文档名
+LEGACY_SUBDIRS = ["可行性研究报告", "软件需求规格说明书", "系统概要设计说明书", "系统详细设计文档"]
 
 
 def discover_docs(doc_dir: Path) -> list[Path]:
-    """优先按旧布局找；找不到就递归扫描所有 PDF。"""
+    """扫描目录下所有 PDF（递归）。不预设文件名，换语料无需改代码。"""
     if not doc_dir.exists():
         return []
-    legacy = [doc_dir / sub / name for sub, name in LEGACY_LAYOUT]
-    if all(p.exists() for p in legacy):
-        return legacy
     return sorted(doc_dir.rglob("*.pdf"))
 
 
@@ -110,8 +106,10 @@ def main() -> None:
     doc_dir = Path(args.docs)
     all_docs = discover_docs(doc_dir)
     if not all_docs:
-        print(f"[ERROR] 在 {doc_dir} 下没找到 PDF。")
-        print("        把待检索的 PDF 放进 data/docs/ 即可（支持子目录）。")
+        # 提示里不打印绝对路径：对别人没用，还暴露本机目录结构
+        print(f"[ERROR] 在 {docs_hint} 下没找到 PDF。")
+        print("        把待检索的 PDF 放进 data/docs/ 即可（支持子目录），")
+        print("        或用 --docs 指定其他目录。")
         return
 
     # 默认只用第一份，快；--all-docs 用全部
@@ -137,12 +135,14 @@ def main() -> None:
             print(c.text)
         return
 
+    # 默认示例 query 使用通用技术问题，不含具体业务名词。
+    # 测自己的语料时用 -q "你的问题" 传参。
     queries = args.query or [
-        "联合贷款人是怎么推荐的？权重怎么算",
-        "农户提交融资意向需要填哪些字段",
-        "系统支持哪些还款方式",
-        "银行用户的审核流程是什么",
-        "ARIMA 价格预测用在哪里",
+        "系统采用什么架构，前后端如何通信",
+        "数据表的主键与索引是怎么设计的",
+        "性能要求中提到哪些指标",
+        "用户角色有哪些，权限如何划分",
+        "价格预测用了什么算法",
     ]
     print()
     for q in queries:

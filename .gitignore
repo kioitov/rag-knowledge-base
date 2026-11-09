@@ -27,3 +27,9 @@ docs/*.pdf
 
 # 私人交接文档，不公开
 HANDOFF-*.md
+SECURITY-*.md
+# 阶段报告：含本机路径与内部文档名，内容已并入 TROUBLESHOOTING.md / README.md
+stage0/STAGE0-*.md
+stage1/STAGE1-*.md
+stage1/EVAL-CASES.md
+

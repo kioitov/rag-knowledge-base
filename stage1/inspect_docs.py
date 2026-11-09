@@ -112,9 +112,11 @@ def main() -> None:
     print(f"可用文档：{len(usable)} / {len(rows)} 份")
     print(f"可用总字符：{sum(r['total_chars'] for r in usable):,} 字")
 
-    # docx 也顺手探一下（同批项目的 Word 版）
-    docx_path = DOC_DIR / "软件需求规格说明书" / "融销通平台软件需求规格说明书.docx"
-    if docx_path.exists():
+    # docx 也顺手探一下：取 data/docs 下第一个 docx 做对照
+    # （原来是写死某个具体文件名，换语料就失效，也把内部文件名带进了代码）
+    docx_files = sorted(DOC_DIR.rglob("*.docx")) if DOC_DIR.exists() else []
+    if docx_files:
+        docx_path = docx_files[0]
         d = Document(docx_path)
         paras = [p.text.strip() for p in d.paragraphs if p.text.strip()]
         chars = sum(len(p) for p in paras)

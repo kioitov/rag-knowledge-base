@@ -28,7 +28,11 @@ DOC_DIR = ROOT / "data" / "docs"
 def _first_pdf() -> Path:
     pdfs = sorted(DOC_DIR.rglob("*.pdf")) if DOC_DIR.exists() else []
     if not pdfs:
-        raise SystemExit(f"没找到 PDF。把文件放进 {DOC_DIR}/ 即可（支持子目录）。")
+        raise SystemExit(
+            "没找到 PDF。\n"
+            "  请把待处理的 PDF 放进 data/docs/（支持子目录），然后重新运行。\n"
+            "  也可以直接传路径：python stage1/peek_text.py <你的文件.pdf>"
+        )
     return pdfs[0]
 
 

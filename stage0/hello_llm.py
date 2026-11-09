@@ -127,7 +127,13 @@ def test_embedding(dry_run: bool) -> bool:
 
     client = OpenAI(api_key=cfg.api_key, base_url=cfg.base_url)
 
-    probe = ["融销通平台是一个农业金融与农产品产销一体化服务平台", "联合贷款人推荐采用基于内容的推荐算法"]
+    # 探测文本用通用技术句子，与具体业务无关。
+    # 验收目标是「接口能通、维度正确、向量有区分度」，与文本主题无关；
+    # 用通用句子既不泄露业务领域，别人 clone 下来也更容易理解。
+    probe = [
+        "向量数据库用于存储高维嵌入向量",
+        "文档切块需要设置重叠以避免语义截断",
+    ]
     t0 = time.perf_counter()
     try:
         resp = client.embeddings.create(model=cfg.model, input=probe)
@@ -140,7 +146,7 @@ def test_embedding(dry_run: bool) -> bool:
     vecs = [d.embedding for d in resp.data]
     actual_dim = len(vecs[0])
 
-    # 余弦相似度：两句都是讲同一个平台，应该偏高
+    # 余弦相似度：两句同属「RAG 技术」这一子领域，应落在弱相关到高度相关之间
     import math
 
     def cos(a: list[float], b: list[float]) -> float:
@@ -160,15 +166,16 @@ def test_embedding(dry_run: bool) -> bool:
         print(f"         阶段 3 写 Chroma 集合时必须按实际返回维度建索引，否则插入会报错。")
 
     # ---- 相似度判定 ----
-    # 阈值来自实测标定（stage0/calibrate_embedding.py，text-embedding-v4 / 1024 维）：
+    # 阈值来自实测标定（stage0/calibrate_embedding.py，text-embedding-v4 / 1024 维，
+    # 四组对照共 24 条通用技术文本）：
     #     完全等价  0.993
     #     高度相关  0.751
-    #     弱相关    0.304   ← 这两句话（平台定位 vs 某个算法）就在这一档
+    #     弱相关    0.304
     #     无关      0.223
-    # 最初我按「语义相近」预设了 0.5 的预警线，实测 0.352 触发误报 ——
-    # 因为那两句话本来就只是「同属一个项目」，不是同一个话题。
-    # 真实的健康区间是：任意两句话都应落在 0.2~1.0 之间，
-    # 且不同语义关系的样本要能拉开单调差距。
+    # 最初我按「语义相近」的直觉预设了 0.5 的预警线，结果在两条
+    # 「同属一个项目、但讲不同子话题」的文本上（0.352）误报。
+    # 标定之后才确认：那个值本来就属于弱相关区间，模型没有问题。
+    # 真正的异常信号是「低于无关组最低值」或「等于 1」。
     if sim < 0.15:
         print(f"  [FAIL] 相似度 {sim:.3f} 低到异常区间（无关组实测 0.223）。")
         print(f"         检查是否用错模型，或返回的是零向量。")

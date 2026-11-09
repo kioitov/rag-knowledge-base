@@ -127,7 +127,11 @@ if __name__ == "__main__":
         docs = Path(__file__).resolve().parent.parent / "data" / "docs"
         pdfs = sorted(docs.rglob("*.pdf")) if docs.exists() else []
         if not pdfs:
-            raise SystemExit(f"没找到 PDF。把文件放进 {docs}/ 即可（支持子目录）。")
+            raise SystemExit(
+                "没找到 PDF。\n"
+                "  请把待处理的 PDF 放进 data/docs/（支持子目录），然后重新运行。\n"
+                "  也可以直接传路径：python stage1/cache.py <你的文件.pdf>"
+            )
         pdf = pdfs[0]
 
     print("首次（现算）：")

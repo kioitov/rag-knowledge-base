@@ -319,13 +319,13 @@ def chunk_section(segs: list[Segment], size: int = 500, overlap: int = 60) -> li
     """章节感知：块首注入【章节名】，章节之间强制断块。
 
     为什么注入章节名很重要：
-        一个块如果只写「农户填写融资意向，系统按 w1/w2/w3 权重计算相似度」，
-        读者（和模型）不知道这是哪个功能。加上【2.6.2 联合贷款人推荐】，
-        答案归属立刻清晰。代价是每块多 ~20 字。
+        一个块如果只写「系统按权重计算相似度」，读者（和模型）
+        不知道这是哪个功能模块。加上【2.6.2 推荐模块】，答案归属立刻清晰。
+        代价是每块多 ~20 字。
 
     **短章节合并（修过的坑）**：
-        实测第一版产生 96 个 <100 字的碎块。原因这份文档有大量
-        「2.6.1 贷款产品智能匹配（IM-01）」这种标题下面只跟一两行说明的章节。
+        实测第一版产生 96 个 <100 字的碎块。原因技术文档里有大量
+        「2.6.1 某个功能（XX-01）」这种标题下面只跟一两行说明的章节。
         纯粹按章节断，就把 500 字的容量浪费掉了。
         → 引入 min_size：章节内容不足 min_size 且与上一块同章节层级时，
           合并进上一个块，而不是独立成块。
@@ -424,15 +424,16 @@ def _selftest(pdf: Path) -> None:
         )
 
     # 抽样展示：同一个位置三种切法的差异
+    # 用中性关键词定位样本，避免把具体业务词写进代码
     print("\n" + "=" * 90)
     print(" 抽样对比：三种切法在同一主题上的表现")
     print("=" * 90)
     for strat in STRATEGIES:
-        cs = [c for c in results[strat] if c.kind == "text" and "联合贷款人" in c.text]
+        cs = [c for c in results[strat] if c.kind == "text" and len(c) > 100]
         if not cs:
-            print(f"\n[{strat}] 未命中关键词")
+            print(f"\n[{strat}] 没有长度合适的正文块可展示")
             continue
-        c = cs[0]
+        c = cs[len(cs) // 2]
         print(f"\n[{strat}] {c.page_label()} | {c.section} | {len(c)}字")
         print(c.text[:420].replace("\n", " ⏎ "))
         print("-" * 90)
@@ -442,7 +443,11 @@ def _default_pdf() -> Path:
     docs = Path(__file__).resolve().parent.parent / "data" / "docs"
     pdfs = sorted(docs.rglob("*.pdf")) if docs.exists() else []
     if not pdfs:
-        raise SystemExit(f"没找到 PDF。把文件放进 {docs}/ 即可（支持子目录）。")
+        raise SystemExit(
+            "没找到 PDF。\n"
+            "  请把待处理的 PDF 放进 data/docs/（支持子目录），然后重新运行。\n"
+            "  也可以直接传路径：python stage1/chunker.py <你的文件.pdf>"
+        )
     return pdfs[0]
 
 
