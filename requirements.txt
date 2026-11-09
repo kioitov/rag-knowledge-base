@@ -1,0 +1,26 @@
+# 依赖锁定（阶段 0 实测装出来的版本，2026-11-09）
+
+## 解释器
+python  →  Python 3.10.10
+
+## 已安装并验证
+fastapi      0.162.2
+uvicorn      0.54.0
+streamlit    1.65.0
+openai       3.46.0
+chromadb     1.5.9
+python-dotenv 1.2.4
+pydantic     2.14.3
+
+## 项目自带既存库
+pymupdf      1.28.2
+python-docx  1.2.0
+pypdf        6.18.1
+numpy        2.2.6
+pandas       2.3.3
+
+## 安装命令（清华源已配好）
+python -m pip install fastapi uvicorn streamlit openai chromadb python-dotenv
+
+## langchain 刻意未装
+第一版手写「读文档→切块→检索→回答」，理解原理后再上框架。
