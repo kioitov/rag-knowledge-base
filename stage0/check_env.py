@@ -60,30 +60,44 @@ def check_libs() -> int:
 
 def check_key() -> int:
     print("\n[2/3] API Key")
-    from dotenv import load_dotenv
-    import os
+    sys.path.insert(0, str(ROOT))
+    import config  # 用统一配置层，避免这里和业务代码判断逻辑不一致
 
-    env_file = ROOT / ".env"
-    if env_file.exists():
-        load_dotenv(env_file, override=True)
-        print(f"      OK   .env 存在：{env_file}")
-    else:
-        print(f"      MISS 没有 .env，请把 .env.example 复制成 .env 再填 Key")
+    print(f"      服务商 : {config.provider()}")
+    print(f"      chat   : {config.chat_model()}")
 
-    key = (os.getenv("DEEPSEEK_API_KEY") or os.getenv("DASHSCOPE_API_KEY") or "").strip()
+    key = config.api_key()
+    var = config.api_key_var_name()
     if not key:
-        print("      MISS 环境变量里没有 DEEPSEEK_API_KEY")
+        print(f"      MISS 没读到 {var}")
+        print(f"           请在 {config.ENV_FILE} 里填 {var}=your-key")
+        print(f"           百炼申请：https://bailian.console.aliyun.com/  → API-KEY 管理")
         return 1
-    if key.startswith("sk-") and len(key) > 20:
-        print(f"      OK   Key 格式正常：{key[:6]}...{key[-4:]}（长度 {len(key)}）")
-        return 0
-    print(f"      WARN Key 长度/前缀可疑：{key[:8]}...（DeepSeek 一般是 sk- 开头，32 位以上）")
+    if len(key) < 20:
+        print(f"      WARN {var} 只有 {len(key)} 位，看着不像完整 key")
+        return 1
+    print(f"      OK   {var} = {key[:6]}...{key[-4:]}（{len(key)} 位）")
+
+    emb = config.embedding_config()
+    if emb.ready():
+        print(f"      OK   embedding: {emb.summary()}")
+    elif emb.configured():
+        print(f"      WARN embedding 缺 key：{emb.model}")
+    else:
+        print(f"      --   embedding 未配置（阶段 3 才需要）")
     return 0
 
 
 def check_net() -> int:
     print("\n[3/3] 网络")
-    hosts = [("api.deepseek.com", 443), ("pypi.tuna.tsinghua.edu.cn", 443)]
+    sys.path.insert(0, str(ROOT))
+    import config
+
+    # 从当前配置的 base_url 推导要探测的主机，而不是写死
+    from urllib.parse import urlparse
+
+    target = urlparse(config.base_url()).hostname or "dashscope.aliyuncs.com"
+    hosts = [(target, 443), ("pypi.tuna.tsinghua.edu.cn", 443)]
     failed = 0
     for host, port in hosts:
         try:
@@ -109,7 +123,9 @@ def main() -> None:
         if missing:
             print(" 修复： python -m pip install fastapi uvicorn streamlit openai chromadb python-dotenv")
         if key_bad:
-            print(" 修复： 编辑 .env，填 DEEPSEEK_API_KEY=sk-xxxx")
+            sys.path.insert(0, str(ROOT))
+            import config
+            print(f" 修复： 编辑 {config.ENV_FILE}，填 {config.api_key_var_name()}=your-key")
         print("=" * 68)
         sys.exit(1)
     print(" 结论：环境就绪，可以跑 hello_llm.py")
