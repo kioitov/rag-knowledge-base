@@ -158,9 +158,26 @@ def test_embedding(dry_run: bool) -> bool:
         print(f"  [WARN] 维度与配置不一致。用百炼 text-embedding-v4 时，")
         print(f"         不显式传 dimensions 参数可能返回默认 1024 以外的值。")
         print(f"         阶段 3 写 Chroma 集合时必须按实际返回维度建索引，否则插入会报错。")
-    if sim < 0.3:
-        print(f"  [WARN] 相似度偏低。两句语义接近，正常应 > 0.5。检查是否用错了模型。")
+
+    # ---- 相似度判定 ----
+    # 阈值来自实测标定（stage0/calibrate_embedding.py，text-embedding-v4 / 1024 维）：
+    #     完全等价  0.993
+    #     高度相关  0.751
+    #     弱相关    0.304   ← 这两句话（平台定位 vs 某个算法）就在这一档
+    #     无关      0.223
+    # 最初我按「语义相近」预设了 0.5 的预警线，实测 0.352 触发误报 ——
+    # 因为那两句话本来就只是「同属一个项目」，不是同一个话题。
+    # 真实的健康区间是：任意两句话都应落在 0.2~1.0 之间，
+    # 且不同语义关系的样本要能拉开单调差距。
+    if sim < 0.15:
+        print(f"  [FAIL] 相似度 {sim:.3f} 低到异常区间（无关组实测 0.223）。")
+        print(f"         检查是否用错模型，或返回的是零向量。")
         return False
+    if sim > 0.98:
+        print(f"  [WARN] 相似度 {sim:.3f} 几乎等于 1，两句不同的话不该这样。")
+        print(f"         检查是否把同一条文本传了两次。")
+    print(f"  [OK] 相似度在健康区间（弱相关实测 0.30 / 无关 0.22 / 相关 0.75）")
+    print(f"       若要完整验证区分度，跑 stage0/calibrate_embedding.py")
     return True
 
 
