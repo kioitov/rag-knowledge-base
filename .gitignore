@@ -24,3 +24,6 @@ docs/*.pdf
 .vscode/
 .idea/
 .DS_Store
+
+# 私人交接文档，不公开
+HANDOFF-*.md
