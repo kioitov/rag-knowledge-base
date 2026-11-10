@@ -42,23 +42,56 @@ def docs_dir() -> Path:
     return ROOT / "data" / "docs"
 
 
-def find_pdfs(subdir: str | None = None) -> list[Path]:
-    """在 data/docs（或其子目录）下找 PDF，按路径排序。"""
+# 支持的语料格式。
+# 原来整条链路只认 PDF，换 Markdown 语料时整条流水线跑不了 ——
+# 这是耦合问题，不是格式问题。列在这里，下游统一按扩展名分派解析器。
+SUPPORTED_SUFFIXES = (".pdf", ".md", ".markdown")
+
+# 以 _ 开头的文件是元数据（_MANIFEST.json、_ATTRIBUTION.md），不是语料
+SKIP_PREFIXES = ("_",)
+
+
+def find_docs(subdir: str | None = None) -> list[Path]:
+    """在 data/docs（或其子目录）下找所有支持的文档，按路径排序。
+
+    取代原来的 find_pdfs。保留 find_pdfs 作为别名，避免各处调用全改。
+    跳过以 `_` 开头的文件（清单、署名等元数据）。
+    """
     base = docs_dir()
     if subdir:
         base = base / subdir
     if not base.exists():
         return []
-    return sorted(base.rglob("*.pdf"))
+
+    out: list[Path] = []
+    for suffix in SUPPORTED_SUFFIXES:
+        for p in base.rglob(f"*{suffix}"):
+            if p.name.startswith(SKIP_PREFIXES):
+                continue
+            out.append(p)
+    return sorted(set(out))
 
 
-def first_pdf_or_exit(subdir: str | None = None) -> Path:
-    """取第一个 PDF；没有就给一句不含绝对路径的提示后退出。"""
-    pdfs = find_pdfs(subdir)
-    if not pdfs:
+def find_pdfs(subdir: str | None = None) -> list[Path]:
+    """兼容旧名。实际返回所有支持的格式，不只是 PDF。
+
+    改名初期很多脚本调用 find_pdfs；保留它避免一次性改动过大。
+    但注意语义已经变了 —— 现在会返回 .md 文件。
+    """
+    return find_docs(subdir)
+
+
+def first_doc_or_exit(subdir: str | None = None) -> Path:
+    """取第一个文档；没有就给一句不含绝对路径的提示后退出。"""
+    docs = find_docs(subdir)
+    if not docs:
         raise SystemExit(
-            f"没找到 PDF。\n"
-            f"  请把待处理的 PDF 放进 {DOCS_HINT}（支持子目录），然后重新运行。\n"
-            f"  也可以直接传路径：python <脚本> <你的文件.pdf>"
+            f"没找到文档。\n"
+            f"  请把待处理的 PDF / Markdown 放进 {DOCS_HINT}（支持子目录），然后重新运行。\n"
+            f"  也可以直接传路径：python <脚本> <你的文件>"
         )
-    return pdfs[0]
+    return docs[0]
+
+
+# 兼容旧名
+first_pdf_or_exit = first_doc_or_exit

@@ -38,7 +38,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from pdf_parser import Segment, parse_pdf
+from pdf_parser import Segment
 
 SENT_END = "。！？；…"
 SENT_SPLIT_RE = re.compile(r"(?<=[。！？；…!?;])\s*")
@@ -79,11 +79,28 @@ class Chunk:
         return self.page + 1
 
     def page_label(self) -> str:
-        """单页 "第 3 页"，跨页 "第 3-5 页"。"""
+        """来源定位的展示文案。
+
+        ⚠️ 这里有一个必须区分的语义：
+
+            PDF     有物理页码  →  "第 3 页"        用户能翻到
+            Markdown 无页码     →  "第 3 节"        页码是编造的
+
+        早期版本无条件拼成「第 N 页」。换 Markdown 语料后，
+        前端显示「第 2 页」——但 .md 文件根本没有页码，那是章节序号。
+        **假装有页码就是在编造溯源信息**，而「可溯源」正是这个项目的卖点。
+
+        所以根据 meta["paged"] 区分：False 时称为「第 N 节」。
+        """
         if not self.pages:
-            return "页码未知"
+            return "位置未知"
         lo, hi = min(self.pages) + 1, max(self.pages) + 1
-        return f"第 {lo} 页" if lo == hi else f"第 {lo}-{hi} 页"
+
+        # 由解析器标记：True/缺省 = 有真实页码，False = 只是章节序号
+        paged = self.meta.get("paged", True) if self.meta else True
+        unit = "页" if paged else "节"
+
+        return f"第 {lo} {unit}" if lo == hi else f"第 {lo}-{hi} {unit}"
 
     def cite(self) -> str:
         return f"{self.source_file} {self.page_label()}"
@@ -190,6 +207,7 @@ def _pack(
     buf_pages: list[int] = []
     buf_section = ""
     buf_kind = "text"
+    buf_paged = True  # 当前块是否有真实页码（PDF=True，Markdown=False）
     carry = ""  # 待注入的尾部重叠
 
     def emit(text: str, pages: list[int], section: str, kind: str) -> None:
@@ -204,6 +222,11 @@ def _pack(
                 section=section,
                 kind=kind,
                 strategy=strategy,
+                # 把解析器的 meta 传下去。
+                # 不传的话 meta["paged"] 在这里丢失，page_label() 就
+                # 分不清「真实页码」和「章节序号」，会给 Markdown 文档
+                # 编造出「第 N 页」这种不存在的定位信息。
+                meta={"paged": buf_paged},
             )
         )
 
@@ -218,17 +241,36 @@ def _pack(
             carry = ""
         buf, buf_len, buf_pages = [], 0, []
 
+    # 注意：buf_paged 在 emit 里被读取、在循环里被赋值，
+    # 所以循环体需要 nonlocal 声明（见下方 `nonlocal buf_paged`）。
+
     for seg in segs:
         # --- 表格：整块独立，永不切碎 ---
         if seg.kind == "table":
             flush()
-            emit(seg.text.strip(), [seg.page], seg.section, "table")
+            tbl_paged = seg.meta.get("paged", True) if seg.meta else True
+            # 表格单独出块，paged 要按它自己的来源判断，不能用 buf 的
+            out.append(
+                Chunk(
+                    text=seg.text.strip(),
+                    source_file="",
+                    pages=[seg.page],
+                    section=seg.section,
+                    kind="table",
+                    strategy=strategy,
+                    meta={"paged": tbl_paged},
+                )
+            )
             carry = ""  # 表格后面不接重叠，避免把表格末行塞进正文块
             continue
 
         text = seg.text.strip()
         if not text:
             continue
+
+        # 记录当前块的 paged 属性（同一批 segs 来自同一文档，取值一致）
+        if seg.meta and "paged" in seg.meta:
+            buf_paged = bool(seg.meta["paged"])
 
         # --- 章节切换：章节是语义硬边界，强制断块 ---
         if force_break_on_section and seg.section != buf_section and buf:
@@ -390,19 +432,27 @@ STRATEGIES = {
 
 
 def build_chunks(
-    pdf_path: Path,
+    doc_path: Path,
     strategy: str = "paragraph",
     size: int = 500,
     overlap: int = 60,
 ) -> list[Chunk]:
-    segs = parse_pdf(pdf_path)
+    """从文档构建切块。
+
+    解析器按扩展名分派（PDF / Markdown），下游的切块逻辑完全不感知格式差异。
+    这是把「解析」和「切块」解耦的关键 —— 加新格式只需要在
+    parse_doc 里加一个分支，chunker 一行都不用改。
+    """
+    from md_parser import parse_doc
+
+    segs = parse_doc(doc_path)
     # 三种策略都先做「标题并入正文」，否则标题会单独成块。
     # fixed 策略是刻意粗糙的基线，同样要过这一步 ——
     # 否则对比实验会把「标题碎块」的锅算到「固定切分」头上，不公平。
     segs = _attach_headings(segs)
     chunks = STRATEGIES[strategy](segs, size=size, overlap=overlap)
     for c in chunks:
-        c.source_file = pdf_path.name
+        c.source_file = doc_path.name
     return chunks
 
 

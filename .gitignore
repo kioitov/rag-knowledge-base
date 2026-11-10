@@ -49,3 +49,11 @@ data/_probe_chroma/
 stage4/shots/
 # 阶段报告，不公开
 stage4/STAGE4-*.md
+
+# 旧语料备份（本地保留）
+data/docs_old/
+# Markdown 语料本体（可从 CC BY 4.0 源重新抓取）
+data/docs/**/*.md
+# 但保留署名与清单
+!data/docs/**/_ATTRIBUTION.md
+!data/docs/**/_MANIFEST.json
