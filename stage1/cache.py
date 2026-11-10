@@ -66,6 +66,11 @@ def load_chunks(
                     kind=d["kind"],
                     strategy=d["strategy"],
                     chunk_id=d["chunk_id"],
+                    # meta 必须还原。
+                    # 第一版漏了这里，导致 paged 标记在缓存往返后丢失，
+                    # page_label() 退化成「第 N 页」——给 Markdown 文档
+                    # 伪造了不存在的页码。是部署预构建时才发现（paged=False 计数为 0）。
+                    meta=d.get("meta", {}),
                 )
                 for d in data["chunks"]
             ]
@@ -94,6 +99,8 @@ def load_chunks(
                         "kind": c.kind,
                         "strategy": c.strategy,
                         "chunk_id": c.chunk_id,
+                        # meta 必须写入，否则 paged 标记丢失
+                        "meta": c.meta,
                     }
                     for c in chunks
                 ],

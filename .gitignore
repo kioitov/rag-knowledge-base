@@ -67,3 +67,6 @@ stage5/STAGE5-*.md
 
 # 裁判明细（含回答原文，体积大）
 data/eval/results/judge*.json
+
+# 部署测试截图
+deploy/shots/

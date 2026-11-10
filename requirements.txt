@@ -1,26 +1,23 @@
-# 依赖锁定（阶段 0 实测装出来的版本，2026-11-09）
+# 依赖清单（供 pip install -r 使用）
+# 版本锁定为本地实测通过的版本，避免部署时被新版本破坏。
 
-## 解释器
-python  →  Python 3.10.10
+# --- Web 与前端 ---
+streamlit==1.65.0
+fastapi==0.162.2
+uvicorn==0.54.0
 
-## 已安装并验证
-fastapi      0.162.2
-uvicorn      0.54.0
-streamlit    1.65.0
-openai       3.46.0
-chromadb     1.5.9
-python-dotenv 1.2.4
-pydantic     2.14.3
+# --- LLM 与向量 ---
+openai==3.46.0
+chromadb==1.5.9
+python-dotenv==1.2.4
 
-## 项目自带既存库
-pymupdf      1.28.2
-python-docx  1.2.0
-pypdf        6.18.1
-numpy        2.2.6
-pandas       2.3.3
+# --- 文档解析 ---
+pymupdf==1.28.2
 
-## 安装命令（清华源已配好）
-python -m pip install fastapi uvicorn streamlit openai chromadb python-dotenv
+# --- 数据处理 ---
+numpy==2.2.6
 
-## langchain 刻意未装
-第一版手写「读文档→切块→检索→回答」，理解原理后再上框架。
+# 说明：
+# 1. langchain 刻意未装 —— 第一版手写全链路，理解原理后再上框架
+# 2. pandas / python-docx / pypdf 是本地开发用的，线上不需要，故不列入
+# 3. Python 3.10+ ；Streamlit Cloud 默认 3.12，兼容
