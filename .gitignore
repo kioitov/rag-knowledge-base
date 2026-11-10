@@ -57,3 +57,10 @@ data/docs/**/*.md
 # 但保留署名与清单
 !data/docs/**/_ATTRIBUTION.md
 !data/docs/**/_MANIFEST.json
+
+# 评测用的临时向量索引
+data/chroma_eval_*/
+# 评测中间产物
+data/eval/results/
+# 阶段报告
+stage5/STAGE5-*.md

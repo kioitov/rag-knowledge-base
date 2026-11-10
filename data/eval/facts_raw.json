@@ -1,0 +1,432 @@
+[
+ {
+  "kind": "default_value",
+  "subject": "Pod",
+  "answer": "纯 HTTP 方式",
+  "evidence": "ubelet 认证/鉴权来保护 kubelet API。API 服务器到节点、Pod 和服务 从 API 服务器到节点、Pod 或服务的连接默认为纯 HTTP 方式，因此既没有认证，也没有加密。 这些连接可通过给 API URL 中的节点、Pod 或服务名称添加前缀 `https:`",
+  "chunk_id": "be852288ea-456",
+  "source_file": "concepts__architecture__control-plane-node-communication.md",
+  "section": "SSH 隧道",
+  "page_label": "第 6-7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "纯 H",
+  "answer": "TTP",
+  "evidence": "鉴权来保护 kubelet API。API 服务器到节点、Pod 和服务 从 API 服务器到节点、Pod 或服务的连接默认为纯 HTTP 方式，因此既没有认证，也没有加密。 这些连接可通过给 API URL 中的节点、Pod 或服务名称添加前缀 `http",
+  "chunk_id": "be852288ea-456",
+  "source_file": "concepts__architecture__control-plane-node-communication.md",
+  "section": "SSH 隧道",
+  "page_label": "第 6-7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "node-eviction-rate",
+  "answer": "0.1）",
+  "evidence": "de-monitor-period` 参数来配置周期。逐出速率限制 大部分情况下，节点控制器把逐出速率限制在每秒 `--node-eviction-rate` 个（默认为 0.1）。 这表示它每 10 秒钟内至多从一个节点驱逐 Pod。当一个可用区域（Availability Zone）中的节点变为",
+  "chunk_id": "b614b92729-460",
+  "source_file": "concepts__architecture__nodes.md",
+  "section": "逐出速率限制",
+  "page_label": "第 10 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "unhealthy-zone-threshold",
+  "answer": "0.55）",
+  "evidence": "（`Ready` 状况为 `Unknown` 或 `False`） 的节点的百分比：- 如果不健康节点的比例超过 `--unhealthy-zone-threshold`（默认为 0.55）， 驱逐速率将会降低。 - 如果集群较小（意即小于等于 `--large-cluster-size-threshold`",
+  "chunk_id": "b614b92729-460",
+  "source_file": "concepts__architecture__nodes.md",
+  "section": "逐出速率限制",
+  "page_label": "第 10 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "large-cluster-size-threshold",
+  "answer": "50）",
+  "evidence": "thy-zone-threshold`（默认为 0.55）， 驱逐速率将会降低。 - 如果集群较小（意即小于等于 `--large-cluster-size-threshold` 个节点 - 默认为 50）， 驱逐操作将会停止。 - 否则驱逐速率将降为每秒 `--secondary-node-eviction-rate` 个",
+  "chunk_id": "b614b92729-460",
+  "source_file": "concepts__architecture__nodes.md",
+  "section": "逐出速率限制",
+  "page_label": "第 10 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "secondary-node-eviction-rate",
+  "answer": "0.01）",
+  "evidence": "r-size-threshold` 个节点 - 默认为 50）， 驱逐操作将会停止。 - 否则驱逐速率将降为每秒 `--secondary-node-eviction-rate` 个（默认为 0.01）。",
+  "chunk_id": "b614b92729-460",
+  "source_file": "concepts__architecture__nodes.md",
+  "section": "逐出速率限制",
+  "page_label": "第 10 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "namespaces",
+  "answer": "Pod 亲和性/反亲和性的定义所在的名字空间",
+  "evidence": "`labelSelector` 和 `topologyKey`所在层同一层次上设置 `namespaces`。 如果 `namespaces` 被忽略或者为空，则默认为 Pod 亲和性/反亲和性的定义所在的名字空间。",
+  "chunk_id": "2783b2e785-241",
+  "source_file": "concepts__scheduling-eviction__assign-pod-node.md",
+  "section": "Pod 间亲和性与反亲和性",
+  "page_label": "第 15 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "resources",
+  "answer": "：resources:- name: cpu weight: 1 - name:",
+  "evidence": "反转得分值。- utilization: 0 score: 10 - utilization: 100 score: 0`resources` 是一个可选参数，默认值为：resources:- name: cpu weight: 1 - name: memory weight: 1它可以像下面这样用来添加扩展资源：",
+  "chunk_id": "ed391e426b-491",
+  "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+  "section": "调整计分函数",
+  "page_label": "第 4-5 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "：resources:- name: cpu weight:",
+  "answer": "name",
+  "evidence": "0 score: 10 - utilization: 100 score: 0`resources` 是一个可选参数，默认值为：resources:- name: cpu weight: 1 - name: memory weight: 1它可以像下面这样用来添加扩展资源：",
+  "chunk_id": "ed391e426b-491",
+  "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+  "section": "调整计分函数",
+  "page_label": "第 4-5 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "operator",
+  "answer": "Equal",
+  "evidence": "的污点，kubelet 会将 Pod 驱逐出去，除非有适当的容忍度设置。下面是一个定义了一些容忍度的 Pod 的例子：`operator` 的默认值是 `Equal`。一个容忍度和一个污点相“匹配”是指它们有一样的键名和效果，并且：* 如果 `operator` 是 `Exists`",
+  "chunk_id": "ccde6190c8-448",
+  "source_file": "concepts__scheduling-eviction__taint-and-toleration.md",
+  "section": "概念",
+  "page_label": "第 3 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "Eq",
+  "answer": "ual",
+  "evidence": "会将 Pod 驱逐出去，除非有适当的容忍度设置。下面是一个定义了一些容忍度的 Pod 的例子：`operator` 的默认值是 `Equal`。一个容忍度和一个污点相“匹配”是指它们有一样的键名和效果，并且：* 如果 `operator` 是 `Exists`（",
+  "chunk_id": "ccde6190c8-448",
+  "source_file": "concepts__scheduling-eviction__taint-and-toleration.md",
+  "section": "概念",
+  "page_label": "第 3 页"
+ },
+ {
+  "kind": "numeric_limit",
+  "subject": "struct utsname",
+  "answer": "64",
+  "evidence": "ame` 和 `hostname --fqdn` 都会返回 Pod 的全限定域名。在 Linux 中，内核的主机名字段（`struct utsname` 的 `nodename` 字段）限定最多 64 个字符。",
+  "chunk_id": "3977d75e63-124",
+  "source_file": "concepts__services-networking__dns-pod-service.md",
+  "section": "Pod 的 setHostnameAsFQDN 字段",
+  "page_label": "第 11 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "ClusterIP 的 Serv",
+  "answer": "ice",
+  "evidence": "Service 来发布该 TCP 侦听器。应用上述清单时，系统将创建一个名为 \"my-service\" 的、 服务类型默认为 ClusterIP 的 Service。 该 Service 指向带有标签 `app.kubernetes.io/name: MyApp` 的所有 Pod 的",
+  "chunk_id": "5156b17d68-494",
+  "source_file": "concepts__services-networking__service.md",
+  "section": "定义 Service",
+  "page_label": "第 5 页"
+ },
+ {
+  "kind": "numeric_limit",
+  "subject": "Kubernetes",
+  "answer": "1000",
+  "evidence": "intSlices 之上，所以 1000 个支撑端点的限制仅影响旧版的Endpoints API。如出现端点过多的情况，Kubernetes 选择最多 1000 个可能的后端端点存储到 Endpoints 对象中， 并在 Endpoints 上设置注解`endpoints.kuber",
+  "chunk_id": "cdb859b559-474",
+  "source_file": "concepts__services-networking__service.md",
+  "section": "应用协议",
+  "page_label": "第 12-13 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "kube-apiserver",
+  "answer": "启用）允许 LoadBalancer 类型的 Service 使用不同的协议",
+  "evidence": "被云平台支持的。当 Service 中定义了多个端口时，特性门控 `MixedProtocolLBService`（从 kube-apiserver 1.24版本起默认为启用）允许 LoadBalancer 类型的 Service 使用不同的协议。可用于负载均衡 Service 的协议集合由你的云平台决定，他们可能在Kubernetes API 强制执行的限制之外",
+  "chunk_id": "e945d6dad0-242",
+  "source_file": "concepts__services-networking__service.md",
+  "section": "禁用负载均衡 Service 的节点端口分配",
+  "page_label": "第 25 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "启用）允许 LoadBalancer 类型的 Serv",
+  "answer": "ice",
+  "evidence": "多个端口时，特性门控 `MixedProtocolLBService`（从 kube-apiserver 1.24版本起默认为启用）允许 LoadBalancer 类型的 Service 使用不同的协议。可用于负载均衡 Service 的协议集合由你的云平台决定，他们可能在Kubernetes API 强",
+  "chunk_id": "e945d6dad0-242",
+  "source_file": "concepts__services-networking__service.md",
+  "section": "禁用负载均衡 Service 的节点端口分配",
+  "page_label": "第 25 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "Del",
+  "answer": "ete",
+  "evidence": "时也会从外部基础设施中移除所关联的存储资产。 动态制备的卷会继承其 StorageClass 中设置的回收策略， 该策略默认为 `Delete`。管理员需要根据用户的期望来配置 StorageClass； 否则 PV 卷被创建之后必须要被编辑或者修补。 参阅更改",
+  "chunk_id": "955389afd9-461",
+  "source_file": "concepts__storage__persistent-volumes.md",
+  "section": "回收（Reclaiming）",
+  "page_label": "第 12-14 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "CSI",
+  "answer": "被启用的",
+  "evidence": "rnetes 控制平面将看到两个资源的所需状态匹配， 并认为其后备卷的大小已被手动增加，无需调整。CSI 卷的扩充 对 CSI 卷的扩充能力默认是被启用的，不过扩充 CSI 卷要求 CSI驱动支持卷扩充操作。可参阅特定 CSI 驱动的文档了解更多信息。重设包含文件系统的卷的",
+  "chunk_id": "f9d467e428-419",
+  "source_file": "concepts__storage__persistent-volumes.md",
+  "section": "扩充 PVC 申领",
+  "page_label": "第 18-19 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "被启用的",
+  "answer": "CSI",
+  "evidence": "面将看到两个资源的所需状态匹配， 并认为其后备卷的大小已被手动增加，无需调整。CSI 卷的扩充 对 CSI 卷的扩充能力默认是被启用的，不过扩充 CSI 卷要求 CSI驱动支持卷扩充操作。可参阅特定 CSI 驱动的文档了解更多信息。重设包含文件系统的卷的大小 只有卷中包含",
+  "chunk_id": "f9d467e428-419",
+  "source_file": "concepts__storage__persistent-volumes.md",
+  "section": "扩充 PVC 申领",
+  "page_label": "第 18-19 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "reclaimPolicy",
+  "answer": "Delete",
+  "evidence": "指定回收策略，可以是 `Delete` 或者 `Retain`。 如果 StorageClass 对象被创建时没有指定 `reclaimPolicy`，它将默认为 `Delete`。通过 StorageClass 手动创建并管理的 PersistentVolume 会使用它们被创建时指定的回收策略",
+  "chunk_id": "83a5979847-415",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "卷扩展",
+  "page_label": "第 6-7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "fa",
+  "answer": "lse",
+  "evidence": "名或 IP 地址。 - `path`：NFS 服务器导出的路径。 - `readOnly`：是否将存储挂载为只读的标志（默认为 `false`）。Kubernetes 不包含内部 NFS 驱动。你需要使用外部驱动为 NFS 创建 StorageClass。 这里",
+  "chunk_id": "2fe188ef5f-483",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "vSphere",
+  "page_label": "第 13-14 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "\"ad",
+  "answer": "min",
+  "evidence": "itor，逗号分隔。该参数是必需的。 - `adminId`：Ceph 客户端 ID，用于在池 Ceph 池中创建映像。默认是 \"admin\"。 - `adminSecret`：`adminId` 的 Secret 名称。该参数是必需的。 提供的 Secret",
+  "chunk_id": "8d0e32040a-494",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "Ceph RBD（已弃用）",
+  "page_label": "第 17-18 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "\"defa",
+  "answer": "ult",
+  "evidence": "bd\" 的 type 参数。 - `adminSecretNamespace`：`adminSecret` 的命名空间。默认是 \"default\"。 - `pool`：Ceph RBD 池。默认是 \"rbd\"。 - `userId`：Ceph 客户端 ID，用于映",
+  "chunk_id": "8d0e32040a-494",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "Ceph RBD（已弃用）",
+  "page_label": "第 17-18 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "azure-storage-account--secret",
+  "answer": "readOnly",
+  "evidence": "名字空间。 默认值与 Pod 相同。 - `secretName`：包含 Azure 存储帐户名称和密钥的密钥的名称。 默认值为 `azure-storage-account--secret` - `readOnly`：指示是否将存储安装为只读的标志。默认为 `false`，表示\"读/写\"挂载。 该设置也会影响 `VolumeMount",
+  "chunk_id": "2a14ad95da-526",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "Azure 文件（已弃用）",
+  "page_label": "第 20 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "true",
+  "answer": "false",
+  "evidence": "stent volumes` 的使用场景可以将这个值设置为 `false` （例如 Cassandra 这样的数据库） `true/false`（默认为 `false`）。这里需要填写字符串，即， 是 `\"true\"` 而不是 `true`。",
+  "chunk_id": "4fd0336dbb-495",
+  "source_file": "concepts__storage__storage-classes.md",
+  "section": "本地",
+  "page_label": "第 21 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "latest",
+  "answer": "Always",
+  "evidence": "OCI 对象的策略。可能的值为：`Always`、`Never` 或 `IfNotPresent`。 如果指定了 `:latest` 标记，则默认为 `Always`，否则默认为 `IfNotPresent`。有关如何使用卷源的更多细节，请参见**Pod 使用镜像卷**示例。",
+  "chunk_id": "d43dbe8773-498",
+  "source_file": "concepts__storage__volumes.md",
+  "section": "image",
+  "page_label": "第 24 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "Always",
+  "answer": "IfNotPresent",
+  "evidence": "能的值为：`Always`、`Never` 或 `IfNotPresent`。 如果指定了 `:latest` 标记，则默认为 `Always`，否则默认为 `IfNotPresent`。有关如何使用卷源的更多细节，请参见**Pod 使用镜像卷**示例。",
+  "chunk_id": "d43dbe8773-498",
+  "source_file": "concepts__storage__volumes.md",
+  "section": "image",
+  "page_label": "第 24 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "ways",
+  "answer": "IfNotPresent",
+  "evidence": "ways`，否则默认为 `IfNotPresent`。有关如何使用卷源的更多细节，请参见**Pod 使用镜像卷**示例。Pod 状态与 `image` 卷 ImageVo",
+  "chunk_id": "5635b4bd41-387",
+  "source_file": "concepts__storage__volumes.md",
+  "section": "image",
+  "page_label": "第 25 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "IfNotPres",
+  "answer": "ent",
+  "evidence": "ways`，否则默认为 `IfNotPresent`。有关如何使用卷源的更多细节，请参见**Pod 使用镜像卷**示例。Pod 状态与 `image` 卷 ImageVol",
+  "chunk_id": "5635b4bd41-387",
+  "source_file": "concepts__storage__volumes.md",
+  "section": "image",
+  "page_label": "第 25 页"
+ },
+ {
+  "kind": "numeric_limit",
+  "subject": "Job",
+  "answer": "200",
+  "evidence": "算从预期创建 Job 到当前时间的时间差。 如果时间差大于该限制，则跳过此次执行。例如，如果将其设置为 `200`，则 Job 控制器允许在实际调度之后最多 200 秒内创建 Job。并发性规则 `.spec.concurrencyPolicy` 字段也是可选的。它声明了 CronJob",
+  "chunk_id": "ee533c86e4-406",
+  "source_file": "concepts__workloads__controllers__cron-jobs.md",
+  "section": "并发性规则",
+  "page_label": "第 16-17 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "Alw",
+  "answer": "ays",
+  "evidence": "monSet 中的 Pod 模板必须具有一个值为 `Always` 的`RestartPolicy`。 当该值未指定时，默认是 `Always`。Pod 选择算符 `.spec.selector` 字段表示 Pod 选择算符，它与Job 的 `.spec.sele",
+  "chunk_id": "73fb6b6290-367",
+  "source_file": "concepts__workloads__controllers__daemonset.md",
+  "section": "Pod 选择算符",
+  "page_label": "第 6-7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "0（",
+  "answer": "Pod",
+  "evidence": "一个可选字段，用于指定新创建的 Pod在没有任意容器崩溃情况下的最小就绪时间， 只有超出这个时间 Pod 才被视为可用。默认值为 0（Pod 在准备就绪后立即将被视为可用）。 要了解何时 Pod 被视为就绪， 可参考容器探针。",
+  "chunk_id": "5ead4f82b7-472",
+  "source_file": "concepts__workloads__controllers__deployment.md",
+  "section": "终止 Pod",
+  "page_label": "第 30-31 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "spec.completions",
+  "answer": ".spec.parallelism",
+  "evidence": "，介于 0 和 `.spec.completions-1` 之间。1. 带**工作队列**的并行 Job： - 不设置 `spec.completions`，默认值为 `.spec.parallelism`。 - 多个 Pod 之间必须相互协调，或者借助外部服务确定每个 Pod 要处理哪个工作条目。 例如，任一 Pod 都",
+  "chunk_id": "6d6130eaf7-487",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "Job 的并行执行",
+  "page_label": "第 7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": ".spec.parallel",
+  "answer": "ism",
+  "evidence": "letions-1` 之间。1. 带**工作队列**的并行 Job： - 不设置 `spec.completions`，默认值为 `.spec.parallelism`。 - 多个 Pod 之间必须相互协调，或者借助外部服务确定每个 Pod 要处理哪个工作条目。 例如，任一 Pod 都可",
+  "chunk_id": "6d6130eaf7-487",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "Job 的并行执行",
+  "page_label": "第 7 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "spec.backoffLimit",
+  "answer": "6",
+  "evidence": "置错误。 为了实现这点，可以将 `.spec.backoffLimit` 设置为视 Job 为失败之前的重试次数。 `.spec.backoffLimit` 的值默认为 6， 除非指定了每个索引的退避限制（仅限带索引的 Job）。 当指定 `.spec.backoffLimitPerInde",
+  "chunk_id": "36b6218525-403",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "Pod 回退失效策略",
+  "page_label": "第 16 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "spec.backoffLimit",
+  "answer": "2147483647 (MaxInt32)",
+  "evidence": "每个索引的退避限制（仅限带索引的 Job）。 当指定 `.spec.backoffLimitPerIndex` 时，`.spec.backoffLimit`默认为 2147483647 (MaxInt32)。与 Job 相关的失效的 Pod 会被 Job 控制器重建，回退重试时间将会按指数增长（从 10 秒、20 秒到 40",
+  "chunk_id": "36b6218525-403",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "Pod 回退失效策略",
+  "page_label": "第 16 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "2147483647 (MaxIn",
+  "answer": "t32",
+  "evidence": "ob）。 当指定 `.spec.backoffLimitPerIndex` 时，`.spec.backoffLimit`默认为 2147483647 (MaxInt32)。与 Job 相关的失效的 Pod 会被 Job 控制器重建，回退重试时间将会按指数增长（从 10 秒、20 秒到 4",
+  "chunk_id": "36b6218525-403",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "Pod 回退失效策略",
+  "page_label": "第 16 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "restartPolicy",
+  "answer": "Always",
+  "evidence": "仅适合于 `restartPolicy` 设置为 `OnFailure` 或 `Never` 的 Pod。如果未设置 `restartPolicy`，默认值为 `Always`。",
+  "chunk_id": "ca9df3d172-389",
+  "source_file": "concepts__workloads__controllers__job.md",
+  "section": "单个 Job 启动控制器 Pod",
+  "page_label": "第 39-40 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "spec.replicas",
+  "answer": "1",
+  "evidence": "as` 来指定要同时运行的 Pod 个数。 ReplicaSet 创建、删除 Pod 以与此值匹配。如果你没有指定 `.spec.replicas`，那么默认值为 1。使用 ReplicaSet 删除 ReplicaSet 和它的 Pod 要删除 ReplicaSet 和它的所有 Po",
+  "chunk_id": "a0f5f82b32-431",
+  "source_file": "concepts__workloads__controllers__replicaset.md",
+  "section": "删除 ReplicaSet 和它的 Pod",
+  "page_label": "第 8-11 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "Retain",
+  "answer": "StatefulSet",
+  "evidence": "，则 StatefulSet 保留现有的 PVC。 现有卷不受影响，集群会将其附加到新 Pod 即将启动的节点上。策略的默认值为 `Retain`，与此新功能之前的 StatefulSet 行为相匹配。这是一个示例策略：apiVersion: apps/v1 kind: StatefulSet ... sp",
+  "chunk_id": "3ec4bcc661-400",
+  "source_file": "concepts__workloads__controllers__statefulset.md",
+  "section": "PersistentVolumeClaim 保留",
+  "page_label": "第 39 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "timeoutSeconds",
+  "answer": "1s",
+  "evidence": "xecProbeTimeout` 特性门控被设置为 `false`，则 `grpc-health-probe`不会考虑 `timeoutSeconds` 设置状态（默认值为 `1s`）， 而内置探针则会在超时时返回失败。在 gRPC 探针中使用 TLS GRPCContainerProbeTLS",
+  "chunk_id": "40e855b903-369",
+  "source_file": "tasks__configure-pod-container__configure-liveness-readiness-startup-probes.md",
+  "section": "在 gRPC 探针中使用 TLS",
+  "page_label": "第 7-8 页"
+ },
+ {
+  "kind": "numeric_limit",
+  "subject": "periodSeconds",
+  "answer": "5",
+  "evidence": "et: path: /healthz port: liveness-port failureThreshold: 30 periodSeconds: 10幸亏有启动探测，应用将会有最多 5 分钟（30 * 10 = 300s）的时间来完成其启动过程。 一旦启动探测成功一次，存活探测任务就会接管对容器的探测，对容器",
+  "chunk_id": "21bf9fa45f-480",
+  "source_file": "tasks__configure-pod-container__configure-liveness-readiness-startup-probes.md",
+  "section": "定义就绪探针",
+  "page_label": "第 10-11 页"
+ },
+ {
+  "kind": "default_value",
+  "subject": "api-audiences",
+  "answer": "一个只有一个元素的列表",
+  "evidence": "API 服务器当做合法的令牌。如果你指定了 `--service-account-issuer`参数，但沒有設置 `--api-audiences`，则控制面认为此参数的默认值为一个只有一个元素的列表， 且该元素为令牌发放者的 URL。kubelet 还可以将 ServiceAccount 令牌投射到 Pod 中。你可",
+  "chunk_id": "5f76f162df-500",
+  "source_file": "tasks__configure-pod-container__configure-service-account.md",
+  "section": "服务账号令牌卷投射",
+  "page_label": "第 9 页"
+ }
+]

@@ -1,0 +1,1941 @@
+{
+ "corpus": "Kubernetes 中文文档（CC BY 4.0）",
+ "total": 130,
+ "by_kind": {
+  "fact": 120,
+  "refuse": 10
+ },
+ "judging": "答案关键词字符串匹配；refuse 类要求出现拒答表述",
+ "items": [
+  {
+   "id": "E001",
+   "kind": "fact",
+   "question": "etcd 集群成员个数应为什么数？",
+   "answer_keywords": [
+    "奇数"
+   ],
+   "evidence_quote": "* 你运行的 etcd 集群成员个数应为奇数。",
+   "chunk_id": "068e0d15b1-435",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "etcd 资源需求",
+   "page_label": "第 2-3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E002",
+   "kind": "fact",
+   "question": "etcd 是基于什么机制的分布式系统？",
+   "answer_keywords": [
+    "主节点（Leader-Based）"
+   ],
+   "evidence_quote": "* etcd 是一个基于主节点（Leader-Based）的分布式系统。",
+   "chunk_id": "068e0d15b1-435",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "etcd 资源需求",
+   "page_label": "第 2-3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E003",
+   "kind": "fact",
+   "question": "字段选择算符的作用是什么？",
+   "answer_keywords": [
+    "根据一个或多个资源字段的值筛选Kubernetes 对象"
+   ],
+   "evidence_quote": "“字段选择算符（Field selectors）”允许你根据一个或多个资源字段的值筛选Kubernetes 对象。",
+   "chunk_id": "b35a6edc35-438",
+   "source_file": "concepts__overview__working-with-objects__field-selectors.md",
+   "section": "支持的字段",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E004",
+   "kind": "fact",
+   "question": "执行 'kubectl get pods' 和哪个命令等价？",
+   "answer_keywords": [
+    "kubectl get pods --field-selector \"\""
+   ],
+   "evidence_quote": "这使得 `kubectl get pods` 和 `kubectl get pods --field-selector \"\"`这两个 `kubectl` 命令是等价的。",
+   "chunk_id": "b35a6edc35-438",
+   "source_file": "concepts__overview__working-with-objects__field-selectors.md",
+   "section": "支持的字段",
+   "page_label": "第 2 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E005",
+   "kind": "fact",
+   "question": "字段选择算符默认是否被应用？",
+   "answer_keywords": [
+    "未被应用"
+   ],
+   "evidence_quote": "默认情况下，字段选择算符/过滤器是未被应用的，",
+   "chunk_id": "b35a6edc35-438",
+   "source_file": "concepts__overview__working-with-objects__field-selectors.md",
+   "section": "支持的字段",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E006",
+   "kind": "fact",
+   "question": "临时容器不能配置什么类型的设置？",
+   "answer_keywords": [
+    "端口配置"
+   ],
+   "evidence_quote": "- 临时容器没有端口配置，因此像 `ports`、`livenessProbe`、`readinessProbe`这样的字段是不允许的。",
+   "chunk_id": "8ba98c0d83-436",
+   "source_file": "concepts__workloads__pods__ephemeral-containers.md",
+   "section": "临时容器的用途",
+   "page_label": "第 4-5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E007",
+   "kind": "fact",
+   "question": "临时容器的 `resources` 配置是否允许？",
+   "answer_keywords": [
+    "不允许"
+   ],
+   "evidence_quote": "- Pod 资源分配是不可变的，因此 `resources` 配置是不允许的。",
+   "chunk_id": "8ba98c0d83-436",
+   "source_file": "concepts__workloads__pods__ephemeral-containers.md",
+   "section": "临时容器的用途",
+   "page_label": "第 4-5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E008",
+   "kind": "fact",
+   "question": "临时容器通过 API 中哪种特殊处理器创建？",
+   "answer_keywords": [
+    "ephemeralcontainers"
+   ],
+   "evidence_quote": "临时容器是使用 API 中的一种特殊的 `ephemeralcontainers` 处理器进行创建的，",
+   "chunk_id": "8ba98c0d83-436",
+   "source_file": "concepts__workloads__pods__ephemeral-containers.md",
+   "section": "临时容器的用途",
+   "page_label": "第 4-5 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E009",
+   "kind": "fact",
+   "question": "Kubernetes 在 PVC 请求更大存储卷时，是否会创建新的 PV 卷？",
+   "answer_keywords": [
+    "不会"
+   ],
+   "evidence_quote": "Kubernetes 不会创建新的 PV 卷来满足此申领的请求。",
+   "chunk_id": "a39a2c95de-424",
+   "source_file": "concepts__storage__persistent-volumes.md",
+   "section": "扩充 PVC 申领",
+   "page_label": "第 17 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E010",
+   "kind": "fact",
+   "question": "当直接编辑 PersistentVolume 的容量后，再使 PVC 大小与之匹配，Kubernetes 控制平面会如何处理存储大小调整？",
+   "answer_keywords": [
+    "无需调整"
+   ],
+   "evidence_quote": "Kubernetes 控制平面将看到两个资源的所需状态匹配，并认为其后备卷的大小已被手动增加，无需调整。",
+   "chunk_id": "a39a2c95de-424",
+   "source_file": "concepts__storage__persistent-volumes.md",
+   "section": "扩充 PVC 申领",
+   "page_label": "第 17 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E011",
+   "kind": "fact",
+   "question": "PVC 请求较大存储卷时，触发的是下层 PersistentVolume 提供存储的卷的什么操作？",
+   "answer_keywords": [
+    "扩充"
+   ],
+   "evidence_quote": "这一编辑操作会触发为下层 PersistentVolume 提供存储的卷的扩充。",
+   "chunk_id": "a39a2c95de-424",
+   "source_file": "concepts__storage__persistent-volumes.md",
+   "section": "扩充 PVC 申领",
+   "page_label": "第 17 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E012",
+   "kind": "fact",
+   "question": "当对象上存在 `apf.kubernetes.io/autoupdate-spec` 注解且值为 `true` 时，谁在控制该对象？",
+   "answer_keywords": [
+    "kube-apiserver"
+   ],
+   "evidence_quote": "如果对象上存在这个注解，并且其取值为`true`，则 kube-apiserver在控制该对象。",
+   "chunk_id": "3170edc793-424",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "强制的与建议的配置对象的维护",
+   "page_label": "第 17 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E013",
+   "kind": "fact",
+   "question": "当对象上 `apf.kubernetes.io/autoupdate-spec` 注解值为 `false` 时，谁在控制该对象？",
+   "answer_keywords": [
+    "用户"
+   ],
+   "evidence_quote": "如果存在这个注解，并且其取值为`false`，则用户在控制对象。",
+   "chunk_id": "3170edc793-424",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "强制的与建议的配置对象的维护",
+   "page_label": "第 17 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E014",
+   "kind": "fact",
+   "question": "若 `apf.kubernetes.io/autoupdate-spec` 注解不存在或未满足条件，且 `metadata.generation` 值为 1，则谁在控制该对象？",
+   "answer_keywords": [
+    "kube-apiserver"
+   ],
+   "evidence_quote": "如果该值为 1，则 kube-apiserver 控制对象，否则用户控制对象。",
+   "chunk_id": "3170edc793-424",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "强制的与建议的配置对象的维护",
+   "page_label": "第 17 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E015",
+   "kind": "fact",
+   "question": "用于保护 etcd 成员之间通信的密钥文件名是什么？",
+   "answer_keywords": [
+    "peer.key"
+   ],
+   "evidence_quote": "例如，使用密钥对 `peer.key` 和 `peer.cert` 来保护 etcd 成员之间的通信，",
+   "chunk_id": "2c8c3c934c-412",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "安全通信",
+   "page_label": "第 10-11 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E016",
+   "kind": "fact",
+   "question": "配置 etcd 安全对等通信时，指定证书文件的参数是什么？",
+   "answer_keywords": [
+    "--peer-cert-file=peer.cert"
+   ],
+   "evidence_quote": "若要使用安全对等通信对 etcd 进行配置，请指定参数 `--peer-key-file=peer.key`和 `--peer-cert-file=peer.cert`，并使用 HTTPS 作为 URL 模式。",
+   "chunk_id": "2c8c3c934c-412",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "安全通信",
+   "page_label": "第 10-11 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E017",
+   "kind": "fact",
+   "question": "etcd 的安全特性依赖于哪种公钥基础设施？",
+   "answer_keywords": [
+    "x509 公钥基础设施（PKI）"
+   ],
+   "evidence_quote": "这些安全特性依赖于 x509 公钥基础设施（PKI）。",
+   "chunk_id": "2c8c3c934c-412",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "安全通信",
+   "page_label": "第 10-11 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E018",
+   "kind": "fact",
+   "question": "Kubernetes 中用于将 Pod 集合在网络上公开出去的抽象是什么？",
+   "answer_keywords": [
+    "Service"
+   ],
+   "evidence_quote": "Kubernetes 中的 Service\nService API 是 Kubernetes 的组成部分，它是一种抽象，帮助你将 Pod 集合在网络上公开出去。",
+   "chunk_id": "52c5d7f3c2-438",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "Kubernetes 中的 Service",
+   "page_label": "第 2-3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E019",
+   "kind": "fact",
+   "question": "每个 Service 对象定义了什么的逻辑集合？",
+   "answer_keywords": [
+    "端点"
+   ],
+   "evidence_quote": "每个 Service 对象定义端点的一个逻辑集合（通常这些端点就是 Pod）以及如何访问到这些 Pod 的策略。",
+   "chunk_id": "52c5d7f3c2-438",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "Kubernetes 中的 Service",
+   "page_label": "第 2-3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E020",
+   "kind": "fact",
+   "question": "Service 抽象的主要作用之一是什么？",
+   "answer_keywords": [
+    "使这种解耦成为可能"
+   ],
+   "evidence_quote": "Service 抽象使这种解耦成为可能。",
+   "chunk_id": "52c5d7f3c2-438",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "Kubernetes 中的 Service",
+   "page_label": "第 2-3 页",
+   "difficulty": "hard",
+   "note": ""
+  },
+  {
+   "id": "E021",
+   "kind": "fact",
+   "question": "StatefulSet 中 Pod 的部署顺序是什么？",
+   "answer_keywords": [
+    "{0..N-1}"
+   ],
+   "evidence_quote": "* 对于包含 N 个 副本的 StatefulSet，当部署 Pod 时，它们是依次创建的，顺序为 {0..N-1}。",
+   "chunk_id": "17a3b69e2b-425",
+   "source_file": "concepts__workloads__controllers__statefulset.md",
+   "section": "部署和扩缩保证",
+   "page_label": "第 15 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E022",
+   "kind": "fact",
+   "question": "StatefulSet 中不安全的做法是什么？",
+   "answer_keywords": [
+    "将 `pod.Spec.TerminationGracePeriodSeconds` 设置为 0"
+   ],
+   "evidence_quote": "StatefulSet 不应将 `pod.Spec.TerminationGracePeriodSeconds` 设置为 0。\n这种做法是不安全的，要强烈阻止。",
+   "chunk_id": "17a3b69e2b-425",
+   "source_file": "concepts__workloads__controllers__statefulset.md",
+   "section": "部署和扩缩保证",
+   "page_label": "第 15 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E023",
+   "kind": "fact",
+   "question": "NodePort Service 的默认端口范围是多少？",
+   "answer_keywords": [
+    "30000-32767"
+   ],
+   "evidence_quote": "使用默认的 NodePort 范围 30000-32767 时，端口段划分如下：- 静态端口段：30000-30085 - 动态端口段：30086-32767",
+   "chunk_id": "fe9123064b-444",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "`type: NodePort`",
+   "page_label": "第 20-21 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E024",
+   "kind": "fact",
+   "question": "NodePort Service 的静态端口段范围是什么？",
+   "answer_keywords": [
+    "30000-30085"
+   ],
+   "evidence_quote": "使用默认的 NodePort 范围 30000-32767 时，端口段划分如下：- 静态端口段：30000-30085 - 动态端口段：30086-32767",
+   "chunk_id": "fe9123064b-444",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "`type: NodePort`",
+   "page_label": "第 20-21 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E025",
+   "kind": "fact",
+   "question": "当 kube-proxy 处于 iptables 模式时，NodePort Service 默认在哪些 IP 上可用？",
+   "answer_keywords": [
+    "所有节点 IP 上"
+   ],
+   "evidence_quote": "当 kube-proxy 处于 `iptables` 模式时，NodePort Service 默认在所有节点 IP 上可用。",
+   "chunk_id": "fe9123064b-444",
+   "source_file": "concepts__services-networking__service.md",
+   "section": "`type: NodePort`",
+   "page_label": "第 20-21 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E026",
+   "kind": "fact",
+   "question": "Kubernetes 中边车容器的 restartPolicy 字段支持从哪个版本开始默认启用？",
+   "answer_keywords": [
+    "v1.29"
+   ],
+   "evidence_quote": "如果你的集群启用了 `SidecarContainers`特性门控（该特性自 Kubernetes v1.29 起默认启用），你可以为 Pod 的 `initContainers`字段中列出的容器指定 `restartPolicy`。",
+   "chunk_id": "9fa38686b3-465",
+   "source_file": "concepts__workloads__pods__sidecar-containers.md",
+   "section": "应用示例",
+   "page_label": "第 3-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E027",
+   "kind": "fact",
+   "question": "文档中用来明确指代仅在 Pod 启动期间运行的容器的术语是什么？",
+   "answer_keywords": [
+    "常规 Init 容器"
+   ],
+   "evidence_quote": "本文档使用术语\"常规 Init 容器\"来明确指代仅在 Pod 启动期间运行的容器。",
+   "chunk_id": "9fa38686b3-465",
+   "source_file": "concepts__workloads__pods__sidecar-containers.md",
+   "section": "应用示例",
+   "page_label": "第 3-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E028",
+   "kind": "fact",
+   "question": "边车容器可以独立于哪些容器启动、停止和重新启动？",
+   "answer_keywords": [
+    "其他 Init 容器以及同一 Pod 内的主应用容器"
+   ],
+   "evidence_quote": "这些可重新启动的**边车（Sidecar）** 容器独立于其他 Init 容器以及同一 Pod 内的主应用容器，",
+   "chunk_id": "9fa38686b3-465",
+   "source_file": "concepts__workloads__pods__sidecar-containers.md",
+   "section": "应用示例",
+   "page_label": "第 3-4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E029",
+   "kind": "fact",
+   "question": "RequestedToCapacityRatio 策略依据什么比率来对节点计分？",
+   "answer_keywords": [
+    "请求值与容量的比率"
+   ],
+   "evidence_quote": "`RequestedToCapacityRatio` 策略允许用户基于请求值与容量的比率，针对参与节点计分的每类资源设置权重。",
+   "chunk_id": "36c9b352bc-553",
+   "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+   "section": "使用 RequestedToCapacityRatio 策略来启用资源装箱",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E030",
+   "kind": "fact",
+   "question": "在 NodeResourcesFit 计分函数中，通过哪个字段控制 RequestedToCapacityRatio 策略？",
+   "answer_keywords": [
+    "scoringStrategy"
+   ],
+   "evidence_quote": "`NodeResourcesFit` 计分函数中的 `RequestedToCapacityRatio` 可以通过scoringStrategy字段来控制。",
+   "chunk_id": "36c9b352bc-553",
+   "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+   "section": "使用 RequestedToCapacityRatio 策略来启用资源装箱",
+   "page_label": "第 4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E031",
+   "kind": "fact",
+   "question": "表示相等的运算符有哪些？",
+   "answer_keywords": [
+    "="
+   ],
+   "evidence_quote": "可接受的运算符有 `=`、`==` 和 `!=` 三种。",
+   "chunk_id": "21d3199fe7-441",
+   "source_file": "concepts__overview__working-with-objects__labels.md",
+   "section": "**基于等值的**需求",
+   "page_label": "第 6 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E032",
+   "kind": "fact",
+   "question": "在过滤语句 `environment=production,tier!=frontend` 中，逗号的作用是什么？",
+   "answer_keywords": [
+    "逗号运算符"
+   ],
+   "evidence_quote": "可以使用逗号运算符来过滤 `production` 环境中的非 `frontend` 层资源：`environment=production,tier!=frontend`。",
+   "chunk_id": "21d3199fe7-441",
+   "source_file": "concepts__overview__working-with-objects__labels.md",
+   "section": "**基于等值的**需求",
+   "page_label": "第 6 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E033",
+   "kind": "fact",
+   "question": "当 Pod 反复启动失败时，kubectl 命令的 Status 字段中可能出现什么值？",
+   "answer_keywords": [
+    "CrashLoopBackOff"
+   ],
+   "evidence_quote": "当 Pod 反复启动失败时，某些 kubectl 命令的 `Status` 字段中可能会出现 `CrashLoopBackOff`。",
+   "chunk_id": "7563d40182-461",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "Pod 阶段",
+   "page_label": "第 6 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E034",
+   "kind": "fact",
+   "question": "当 Pod 被删除时，kubectl 命令的 Status 字段中可能出现什么值？",
+   "answer_keywords": [
+    "Terminating"
+   ],
+   "evidence_quote": "同样，当 Pod 被删除时，某些 kubectl 命令的 `Status` 字段中可能会出现 `Terminating`。",
+   "chunk_id": "7563d40182-461",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "Pod 阶段",
+   "page_label": "第 6 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E035",
+   "kind": "fact",
+   "question": "文档中明确指出不要将 Status 与 Pod 的哪个字段混淆？",
+   "answer_keywords": [
+    "phase"
+   ],
+   "evidence_quote": "确保不要将 **Status**（kubectl 用于用户直觉的显示字段）与 Pod 的 `phase` 混淆。",
+   "chunk_id": "7563d40182-461",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "Pod 阶段",
+   "page_label": "第 6 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E036",
+   "kind": "fact",
+   "question": "NodeResourcesFit 插件中，intel.com/foo 资源的权重是多少？",
+   "answer_keywords": [
+    "3"
+   ],
+   "evidence_quote": "- name: intel.com/foo weight: 3",
+   "chunk_id": "fc2c0c4396-497",
+   "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+   "section": "使用 RequestedToCapacityRatio 策略来启用资源装箱",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E037",
+   "kind": "fact",
+   "question": "NodeResourcesFit 插件使用哪种评分策略类型？",
+   "answer_keywords": [
+    "MostAllocated"
+   ],
+   "evidence_quote": "type: MostAllocated",
+   "chunk_id": "fc2c0c4396-497",
+   "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+   "section": "使用 RequestedToCapacityRatio 策略来启用资源装箱",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E038",
+   "kind": "fact",
+   "question": "调度器选择节点时依据什么标准？",
+   "answer_keywords": [
+    "得分最高的节点"
+   ],
+   "evidence_quote": "调度器选择得分最高的节点，旨在将 Pod 调度到利用率较高的节点上。",
+   "chunk_id": "fc2c0c4396-497",
+   "source_file": "concepts__scheduling-eviction__resource-bin-packing.md",
+   "section": "使用 RequestedToCapacityRatio 策略来启用资源装箱",
+   "page_label": "第 3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E039",
+   "kind": "fact",
+   "question": "Linux 内核通过什么机制来强制执行 CPU 和内存限制？",
+   "answer_keywords": [
+    "CGroup"
+   ],
+   "evidence_quote": "在 Linux 节点上，Linux 内核通过CGroup 来强制执行限制。",
+   "chunk_id": "d5ccc8bbcf-338",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "请求和限制",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E040",
+   "kind": "fact",
+   "question": "当容器接近其 cpu 限制值时，内核使用什么机制限制其 CPU 访问？",
+   "answer_keywords": [
+    "CPU 节流机制（CPU Throttling）"
+   ],
+   "evidence_quote": "`cpu` 限制通过 CPU 节流机制（CPU Throttling）来强制执行。",
+   "chunk_id": "d5ccc8bbcf-338",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "请求和限制",
+   "page_label": "第 3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E041",
+   "kind": "fact",
+   "question": "cpu 限制在内核层面是什么性质的限制？",
+   "answer_keywords": [
+    "硬性限制"
+   ],
+   "evidence_quote": "因此，`cpu` 限制是内核强制执行的一个硬性限制。",
+   "chunk_id": "d5ccc8bbcf-338",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "请求和限制",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E042",
+   "kind": "fact",
+   "question": "Kubernetes 控制面在删除与某 Secret 关联的 ServiceAccount 时，会自动清理什么？",
+   "answer_keywords": [
+    "该Secret 中长期有效的令牌"
+   ],
+   "evidence_quote": "当你删除一个与某 Secret 相关联的 ServiceAccount 时，Kubernetes 的控制面会自动清理该Secret 中长期有效的令牌。",
+   "chunk_id": "ea4b9a049e-476",
+   "source_file": "tasks__configure-pod-container__configure-service-account.md",
+   "section": "为服务账号添加 ImagePullSecrets",
+   "page_label": "第 5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E043",
+   "kind": "fact",
+   "question": "使用 `kubectl get serviceaccount build-robot -o yaml` 查看 ServiceAccount 时，为什么看不到 `build-robot-secret` Secret？",
+   "answer_keywords": [
+    "因为该字段只会填充自动生成的 Secret"
+   ],
+   "evidence_quote": "在 ServiceAccount API 对象中看不到 `build-robot-secret` Secret，`.secrets` 字段，因为该字段只会填充自动生成的 Secret。",
+   "chunk_id": "ea4b9a049e-476",
+   "source_file": "tasks__configure-pod-container__configure-service-account.md",
+   "section": "为服务账号添加 ImagePullSecrets",
+   "page_label": "第 5 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E044",
+   "kind": "fact",
+   "question": "哪种类型的 Secret 用于 ServiceAccount 的身份认证？",
+   "answer_keywords": [
+    "kubernetes.io/service-account-token"
+   ],
+   "evidence_quote": "b84e-002dc52800daType:   kubernetes.io/service-account-token",
+   "chunk_id": "ea4b9a049e-476",
+   "source_file": "tasks__configure-pod-container__configure-service-account.md",
+   "section": "为服务账号添加 ImagePullSecrets",
+   "page_label": "第 5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E045",
+   "kind": "fact",
+   "question": "查看所有位于名字空间中的 Kubernetes 资源的命令是什么？",
+   "answer_keywords": [
+    "kubectl api-resources --namespaced=true"
+   ],
+   "evidence_quote": "查看哪些 Kubernetes 资源在名字空间中，哪些不在名字空间中：位于名字空间中的资源\nkubectl api-resources --namespaced=true",
+   "chunk_id": "1ef2274a8d-494",
+   "source_file": "concepts__overview__working-with-objects__namespaces.md",
+   "section": "不在名字空间中的资源",
+   "page_label": "第 10-12 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E046",
+   "kind": "fact",
+   "question": "Kubernetes 名字空间名称必须符合哪个 RFC 标准？",
+   "answer_keywords": [
+    "RFC 1123 DNS 标签"
+   ],
+   "evidence_quote": "因此，所有的名字空间名称都必须是合法的RFC 1123 DNS 标签。",
+   "chunk_id": "1ef2274a8d-494",
+   "source_file": "concepts__overview__working-with-objects__namespaces.md",
+   "section": "不在名字空间中的资源",
+   "page_label": "第 10-12 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E047",
+   "kind": "fact",
+   "question": "以内存为介质的 emptyDir 卷的主要优势是什么？",
+   "answer_keywords": [
+    "性能较好"
+   ],
+   "evidence_quote": "以内存为介质的 `emptyDir` 因性能较好而很有用，但内存通常比其他存储介质（如磁盘或 SSD）小得多且成本更高。",
+   "chunk_id": "f12a24f218-432",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "使用内存作为介质的 `emptyDir` 卷的注意事项",
+   "page_label": "第 19 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E048",
+   "kind": "fact",
+   "question": "Kubernetes 或操作系统是否会自动从内存为介质的 emptyDir 卷中删除文件？",
+   "answer_keywords": [
+    "不会"
+   ],
+   "evidence_quote": "Kubernetes 或操作系统都不会自动从卷中删除文件，因此当系统或 Pod 面临内存压力时，将无法回收这些文件所使用的内存。",
+   "chunk_id": "f12a24f218-432",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "使用内存作为介质的 `emptyDir` 卷的注意事项",
+   "page_label": "第 19 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E049",
+   "kind": "fact",
+   "question": "将内存用作 emptyDir 卷时，文件管理责任在谁？",
+   "answer_keywords": [
+    "用户应用"
+   ],
+   "evidence_quote": "存储在内存为介质的卷上的文件几乎完全由用户应用所管理。",
+   "chunk_id": "f12a24f218-432",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "使用内存作为介质的 `emptyDir` 卷的注意事项",
+   "page_label": "第 19 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E050",
+   "kind": "fact",
+   "question": "Job 控制器创建的 Pod 带有什么 Finalizer？",
+   "answer_keywords": [
+    "batch.kubernetes.io/job-tracking"
+   ],
+   "evidence_quote": "为了实现这一点，Job 控制器创建的 Pod 带有 Finalizer `batch.kubernetes.io/job-tracking`。",
+   "chunk_id": "a3534c94fe-475",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "弹性索引 Job",
+   "page_label": "第 32-34 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E051",
+   "kind": "fact",
+   "question": "设置 manualSelector: true 的作用是什么？",
+   "answer_keywords": [
+    "告诉系统你知道自己在干什么并要求系统允许这种不匹配的存在"
+   ],
+   "evidence_quote": "设置 `manualSelector: true`是在告诉系统你知道自己在干什么并要求系统允许这种不匹配的存在。",
+   "chunk_id": "a3534c94fe-475",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "弹性索引 Job",
+   "page_label": "第 32-34 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E052",
+   "kind": "fact",
+   "question": "控制器在什么条件下才会移除 Pod 上的 Finalizer？",
+   "answer_keywords": [
+    "在 Pod 被记入 Job 状态后"
+   ],
+   "evidence_quote": "控制器只有在 Pod 被记入 Job 状态后才会移除 Finalizer，允许 Pod 可以被其他控制器或用户移除。",
+   "chunk_id": "a3534c94fe-475",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "弹性索引 Job",
+   "page_label": "第 32-34 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E053",
+   "kind": "fact",
+   "question": "默认的 Pod 删除宽限期限是多少秒？",
+   "answer_keywords": [
+    "30 秒钟"
+   ],
+   "evidence_quote": "默认情况下，所有的删除操作都会附有 30 秒钟的宽限期限。",
+   "chunk_id": "9e484c2321-490",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "强制终止 Pod",
+   "page_label": "第 40-41 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E054",
+   "kind": "fact",
+   "question": "kubectl delete 命令中用于设置宽限期的选项是什么？",
+   "answer_keywords": [
+    "--grace-period="
+   ],
+   "evidence_quote": "`kubectl delete` 命令支持 `--grace-period=` 选项，允许你重载默认值，",
+   "chunk_id": "9e484c2321-490",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "强制终止 Pod",
+   "page_label": "第 40-41 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E055",
+   "kind": "fact",
+   "question": "当 Pod 终止宽限期超时时，kubelet 向容器内进程发送什么信号？",
+   "answer_keywords": [
+    "SIGKILL"
+   ],
+   "evidence_quote": "容器运行时会向 Pod 中所有容器内仍在运行的进程发送 `SIGKILL` 信号。",
+   "chunk_id": "9e484c2321-490",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "强制终止 Pod",
+   "page_label": "第 40-41 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E056",
+   "kind": "fact",
+   "question": "当 DefaultStorageClass 准入控制器插件启用时，未设置 storageClassName 的 PVC 会绑定到哪类 PV 卷？",
+   "answer_keywords": [
+    "隶属于默认存储类的 PV 卷"
+   ],
+   "evidence_quote": "如果准入控制器插件被启用，则管理员可以设置一个默认的 StorageClass。所有未设置 `storageClassName` 的 PVC 都只能绑定到隶属于默认存储类的 PV 卷。",
+   "chunk_id": "571d24f12f-423",
+   "source_file": "concepts__storage__persistent-volumes.md",
+   "section": "类",
+   "page_label": "第 40 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E057",
+   "kind": "fact",
+   "question": "Pod 通过哪个字段引用其 PodGroup？",
+   "answer_keywords": [
+    "spec.schedulingGroup"
+   ],
+   "evidence_quote": "而 `Pod` 通过 `spec.schedulingGroup` 字段引用其 `PodGroup`。",
+   "chunk_id": "4dd2b501d5-436",
+   "source_file": "concepts__workloads___index.md",
+   "section": "调度工作负载",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E058",
+   "kind": "fact",
+   "question": "Workload API 允许定义什么模板来对 Pod 进行分组？",
+   "answer_keywords": [
+    "PodGroupTemplates"
+   ],
+   "evidence_quote": "Workload API允许你定义 `PodGroupTemplates` 来对 Pod 进行分组，",
+   "chunk_id": "4dd2b501d5-436",
+   "source_file": "concepts__workloads___index.md",
+   "section": "调度工作负载",
+   "page_label": "第 3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E059",
+   "kind": "fact",
+   "question": "哪种调度方式被描述为“全有或全无”，并特别适用于批处理和机器学习类工作负载？",
+   "answer_keywords": [
+    "全有或全无"
+   ],
+   "evidence_quote": "在需要“全有或全无”的调度方式时，这对于批处理和机器学习类工作负载尤其有用。",
+   "chunk_id": "4dd2b501d5-436",
+   "source_file": "concepts__workloads___index.md",
+   "section": "调度工作负载",
+   "page_label": "第 3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E060",
+   "kind": "fact",
+   "question": "Kubernetes Job 的默认完成模式是什么？",
+   "answer_keywords": [
+    "NonIndexed"
+   ],
+   "evidence_quote": "`NonIndexed`（默认值）：当成功完成的 Pod 个数达到 `.spec.completions` 所设值时认为 Job 已经完成。",
+   "chunk_id": "2793eecc06-463",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "完成模式",
+   "page_label": "第 9 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E061",
+   "kind": "fact",
+   "question": "当 `.spec.completions` 为 null 时，Job 被隐式处理为什么完成模式？",
+   "answer_keywords": [
+    "NonIndexed"
+   ],
+   "evidence_quote": "要注意的是，当 `.spec.completions` 取值为 null 时，Job 被隐式处理为 `NonIndexed`。",
+   "chunk_id": "2793eecc06-463",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "完成模式",
+   "page_label": "第 9 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E062",
+   "kind": "fact",
+   "question": "在 Indexed 模式下，Pod 的完成索引范围是什么？",
+   "answer_keywords": [
+    "0 到 `.spec.completions-1`"
+   ],
+   "evidence_quote": "`Indexed`：Job 的 Pod 会获得对应的完成索引，取值为 0 到 `.spec.completions-1`。",
+   "chunk_id": "2793eecc06-463",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "完成模式",
+   "page_label": "第 9 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E063",
+   "kind": "fact",
+   "question": "Kubernetes 中代表集群上处于运行状态的一组或更多容器的集合是什么？",
+   "answer_keywords": [
+    "Pod"
+   ],
+   "evidence_quote": "在 Kubernetes 中，Pod 代表的是集群上处于运行状态的一组或更多容器的集合。",
+   "chunk_id": "3b4ab28223-398",
+   "source_file": "concepts__workloads___index.md",
+   "section": "工作负载",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E064",
+   "kind": "fact",
+   "question": "当 Pod 所在节点出现致命错误时，Kubernetes 将 Pod 的失败状态视为什么？",
+   "answer_keywords": [
+    "最终状态"
+   ],
+   "evidence_quote": "Kubernetes 将这类失败视为最终状态：即使该节点后来恢复正常运行，你也需要创建新的 Pod 以恢复应用。",
+   "chunk_id": "3b4ab28223-398",
+   "source_file": "concepts__workloads___index.md",
+   "section": "工作负载",
+   "page_label": "第 2 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E065",
+   "kind": "fact",
+   "question": "Kubernetes 中用于替用户管理一组 Pod 的资源类型叫什么？",
+   "answer_keywords": [
+    "负载资源"
+   ],
+   "evidence_quote": "而是使用**负载资源**来替用户管理一组 Pod。",
+   "chunk_id": "3b4ab28223-398",
+   "source_file": "concepts__workloads___index.md",
+   "section": "工作负载",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E066",
+   "kind": "fact",
+   "question": "Kubernetes 支持在 Pod 创建后更改哪些资源？",
+   "answer_keywords": [
+    "CPU 和内存资源"
+   ],
+   "evidence_quote": "Kubernetes 支持在 Pod 创建后更改分配给 Pod 的 CPU 和内存资源。",
+   "chunk_id": "b5da7acf8b-495",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "原地 Pod 调整大小",
+   "page_label": "第 29-30 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E067",
+   "kind": "fact",
+   "question": "对于没有 Init 容器的 Pod，kubelet 何时将 `Initialized` 状况设置为 `True`？",
+   "answer_keywords": [
+    "在创建沙箱和网络配置开始之前"
+   ],
+   "evidence_quote": "对于没有 Init 容器的 Pod，kubelet 会在创建沙箱和网络配置开始之前将`Initialized` 状况设置为 `True`。",
+   "chunk_id": "b5da7acf8b-495",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "原地 Pod 调整大小",
+   "page_label": "第 29-30 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E068",
+   "kind": "fact",
+   "question": "Pod 沙箱虚拟机重启后，镜像拉取与容器创建在什么条件满足后进行？",
+   "answer_keywords": [
+    "在沙箱创建、网络配置、卷挂载以及（如有请求）动态资源分配完成之后"
+   ],
+   "evidence_quote": "在沙箱创建、网络配置、卷挂载以及（如有请求）动态资源分配完成之后，kubelet会将 `PodReadyToStartContainers` 状况设置为 `True`。镜像拉取与容器创建会在此之后进行。",
+   "chunk_id": "b5da7acf8b-495",
+   "source_file": "concepts__workloads__pods__pod-lifecycle.md",
+   "section": "原地 Pod 调整大小",
+   "page_label": "第 29-30 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E069",
+   "kind": "fact",
+   "question": "kubeadm 生成的客户端证书有效期是多久？",
+   "answer_keywords": [
+    "1 年"
+   ],
+   "evidence_quote": "由 kubeadm 生成的客户端证书在 1 年后到期。",
+   "chunk_id": "5081778645-490",
+   "source_file": "tasks__administer-cluster__kubeadm__kubeadm-certs.md",
+   "section": "使用自定义的证书",
+   "page_label": "第 2-3 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E070",
+   "kind": "fact",
+   "question": "通过什么配置项可以指定 kubeadm 的证书目录？",
+   "answer_keywords": [
+    "certificatesDir"
+   ],
+   "evidence_quote": "你可以通过提供你自己的证书来改变这个行为策略。如果要这样做，你必须将证书文件放置在通过 `--cert-dir` 命令行参数或者 kubeadm 配置中的`certificatesDir` 配置项指明的目录中。",
+   "chunk_id": "5081778645-490",
+   "source_file": "tasks__administer-cluster__kubeadm__kubeadm-certs.md",
+   "section": "使用自定义的证书",
+   "page_label": "第 2-3 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E071",
+   "kind": "fact",
+   "question": "Deployment 的新修订版本在什么情况下会被创建？",
+   "answer_keywords": [
+    "当 Deployment 的 Pod 模板（`.spec.template`）发生更改时"
+   ],
+   "evidence_quote": "这意味着仅当 Deployment 的 Pod 模板（`.spec.template`）发生更改时，才会创建新修订版本-- 例如，模板的标签或容器镜像发生变化。",
+   "chunk_id": "7c8dad1d38-435",
+   "source_file": "concepts__workloads__controllers__deployment.md",
+   "section": "回滚 Deployment",
+   "page_label": "第 8 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E072",
+   "kind": "fact",
+   "question": "哪些操作不会创建 Deployment 修订版本？",
+   "answer_keywords": [
+    "Deployment 的扩缩容操作"
+   ],
+   "evidence_quote": "其他更新，如 Deployment 的扩缩容操作不会创建 Deployment 修订版本。",
+   "chunk_id": "7c8dad1d38-435",
+   "source_file": "concepts__workloads__controllers__deployment.md",
+   "section": "回滚 Deployment",
+   "page_label": "第 8 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E073",
+   "kind": "fact",
+   "question": "回滚 Deployment 时，哪一部分会被回滚？",
+   "answer_keywords": [
+    "只有 Deployment 的 Pod 模板部分"
+   ],
+   "evidence_quote": "换言之，当你回滚到较早的修订版本时，只有 Deployment 的 Pod 模板部分会被回滚。",
+   "chunk_id": "7c8dad1d38-435",
+   "source_file": "concepts__workloads__controllers__deployment.md",
+   "section": "回滚 Deployment",
+   "page_label": "第 8 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E074",
+   "kind": "fact",
+   "question": "云控制器管理器需要对 v1/Service 资源具备哪些访问权限？",
+   "answer_keywords": [
+    "list - get - watch - patch - update"
+   ],
+   "evidence_quote": "`v1/Service`：- list - get - watch - patch - update",
+   "chunk_id": "13b2666ec5-499",
+   "source_file": "concepts__architecture__cloud-controller.md",
+   "section": "其他",
+   "page_label": "第 11-12 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E075",
+   "kind": "fact",
+   "question": "云控制器管理器对 v1/Event 资源需要哪些权限？",
+   "answer_keywords": [
+    "create - patch - update"
+   ],
+   "evidence_quote": "`v1/Event`:- create - patch - update",
+   "chunk_id": "13b2666ec5-499",
+   "source_file": "concepts__architecture__cloud-controller.md",
+   "section": "其他",
+   "page_label": "第 11-12 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E076",
+   "kind": "fact",
+   "question": "该 NetworkPolicy 的 Ingress 规则允许连接到哪个端口？",
+   "answer_keywords": [
+    "6379 TCP 端口"
+   ],
+   "evidence_quote": "（Ingress 规则）允许以下 Pod 连接到 `default` 名字空间下的带有 `role=db`标签的所有 Pod 的 6379 TCP 端口：",
+   "chunk_id": "e8526026ee-486",
+   "source_file": "concepts__services-networking__network-policies.md",
+   "section": "NetworkPolicy 资源",
+   "page_label": "第 5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E077",
+   "kind": "fact",
+   "question": "该 NetworkPolicy 的 Egress 规则允许访问的目标 CIDR 是什么？",
+   "answer_keywords": [
+    "10.0.0.0/24"
+   ],
+   "evidence_quote": "（Egress 规则）允许 `default` 名字空间中任何带有标签 `role=db` 的 Pod 到 CIDR `10.0.0.0/24` 下 5978 TCP 端口的连接。",
+   "chunk_id": "e8526026ee-486",
+   "source_file": "concepts__services-networking__network-policies.md",
+   "section": "NetworkPolicy 资源",
+   "page_label": "第 5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E078",
+   "kind": "fact",
+   "question": "该 NetworkPolicy 的 Egress 规则中指定的目标端口是多少？",
+   "answer_keywords": [
+    "5978 TCP 端口"
+   ],
+   "evidence_quote": "（Egress 规则）允许 `default` 名字空间中任何带有标签 `role=db` 的 Pod 到 CIDR `10.0.0.0/24` 下 5978 TCP 端口的连接。",
+   "chunk_id": "e8526026ee-486",
+   "source_file": "concepts__services-networking__network-policies.md",
+   "section": "NetworkPolicy 资源",
+   "page_label": "第 5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E079",
+   "kind": "fact",
+   "question": "通过 `kubectl get secrets -A -o yaml` 命令返回的 List 响应包含什么内容？",
+   "answer_keywords": [
+    "所有 Secret 的内容"
+   ],
+   "evidence_quote": "例如，当返回 List 响应时（例如，通过`kubectl get secrets -A -o yaml`），响应包含所有 Secret 的内容。",
+   "chunk_id": "81d8753b5c-482",
+   "source_file": "concepts__security__rbac-good-practices.md",
+   "section": "工作负载的创建",
+   "page_label": "第 8-10 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E080",
+   "kind": "fact",
+   "question": "在一个命名空间中创建工作负载（如 Pod）的权限会隐式授予对哪些资源的访问权限？",
+   "answer_keywords": [
+    "Secret、ConfigMap 和 PersistentVolume"
+   ],
+   "evidence_quote": "在一个命名空间中创建工作负载（Pod 或管理 Pod 的工作负载资源）的权限隐式地授予了对该命名空间中许多其他资源的访问权限，例如可以挂载在Pod 中的 Secret、ConfigMap 和 PersistentVolume。",
+   "chunk_id": "81d8753b5c-482",
+   "source_file": "concepts__security__rbac-good-practices.md",
+   "section": "工作负载的创建",
+   "page_label": "第 8-10 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E081",
+   "kind": "fact",
+   "question": "集群层面的扩展资源由什么程序管理？",
+   "answer_keywords": [
+    "调度器扩展程序"
+   ],
+   "evidence_quote": "集群层面的扩展资源并不绑定到具体节点。\n它们通常由调度器扩展程序（Scheduler Extender）管理，这些程序处理资源消耗和资源配额。",
+   "chunk_id": "40afd5900c-353",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "管理扩展资源",
+   "page_label": "第 27 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E082",
+   "kind": "fact",
+   "question": "在调度器策略配置中，哪个字段指定调度器不检查某扩展资源？",
+   "answer_keywords": [
+    "ignoredByScheduler"
+   ],
+   "evidence_quote": "- `ignoredByScheduler` 字段指定调度器不要在其 `PodFitsResources` 断言中检查\"example.com/foo\" 资源。",
+   "chunk_id": "40afd5900c-353",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "管理扩展资源",
+   "page_label": "第 27 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E083",
+   "kind": "fact",
+   "question": "示例中被调度器扩展程序处理的集群层扩展资源名称是什么？",
+   "answer_keywords": [
+    "example.com/foo"
+   ],
+   "evidence_quote": "下面的调度器策略配置标明集群层扩展资源 \"example.com/foo\" 由调度器扩展程序处理。",
+   "chunk_id": "40afd5900c-353",
+   "source_file": "concepts__configuration__manage-resources-containers.md",
+   "section": "管理扩展资源",
+   "page_label": "第 27 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E084",
+   "kind": "fact",
+   "question": "在 Kubernetes 1.27 及更高版本中，流式列表的监视请求在初始通知突发阶段占用的席位数与什么请求相同？",
+   "answer_keywords": [
+    "列表请求"
+   ],
+   "evidence_quote": "如果在 1.27 及更高版本中使用流式列表，因为集合的整个状态必须以流式传输，所以监视请求在其初始的通知突发阶段将占用与列表请求相同数量的席位。",
+   "chunk_id": "5579322077-397",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "工作负载修改",
+   "page_label": "第 24 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E085",
+   "kind": "fact",
+   "question": "监视请求在初始通知突发阶段之后是否还保留席位？",
+   "answer_keywords": [
+    "不再保留任何席位"
+   ],
+   "evidence_quote": "请注意，在这两种情况下，监视请求在此初始阶段之后将不再保留任何席位。",
+   "chunk_id": "5579322077-397",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "工作负载修改",
+   "page_label": "第 24 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E086",
+   "kind": "fact",
+   "question": "为降低列表请求的席位占用，可采用什么方式限制取回的对象数量？",
+   "answer_keywords": [
+    "分页"
+   ],
+   "evidence_quote": "例如通过使用分页等方式限制列表请求中取回的对象数量，可以在更短时间内使用更少的总席位数。",
+   "chunk_id": "5579322077-397",
+   "source_file": "concepts__cluster-administration__flow-control.md",
+   "section": "工作负载修改",
+   "page_label": "第 24 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E087",
+   "kind": "fact",
+   "question": "在生产环境中部署 etcd 时，推荐在哪种环境下运行以满足资源需求？",
+   "answer_keywords": [
+    "专用机器或隔离环境"
+   ],
+   "evidence_quote": "因此，请在专用机器或隔离环境上运行 etcd 集群，\n以满足所需资源需求。",
+   "chunk_id": "e19d609940-472",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "启动 etcd 集群",
+   "page_label": "第 3-5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E088",
+   "kind": "fact",
+   "question": "用于通过网络与 etcd 交互的主要命令行客户端是什么？",
+   "answer_keywords": [
+    "etcdctl"
+   ],
+   "evidence_quote": "- `etcdctl`：这是通过网络与 etcd 交互的主要命令行客户端。",
+   "chunk_id": "e19d609940-472",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "启动 etcd 集群",
+   "page_label": "第 3-5 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E089",
+   "kind": "fact",
+   "question": "etcdutl 工具主要用于什么类型的操作？",
+   "answer_keywords": [
+    "直接操作 etcd 数据文件"
+   ],
+   "evidence_quote": "- `etcdutl`：这是一个被设计用来直接操作 etcd 数据文件的管理工具，",
+   "chunk_id": "e19d609940-472",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "启动 etcd 集群",
+   "page_label": "第 3-5 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E090",
+   "kind": "fact",
+   "question": "查看 Job 对应的已完成 Pod 应该使用什么命令？",
+   "answer_keywords": [
+    "kubectl get pods"
+   ],
+   "evidence_quote": "要查看 Job 对应的已完成的 Pod，可以执行 `kubectl get pods`。",
+   "chunk_id": "a692052fda-431",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "运行示例 Job",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E091",
+   "kind": "fact",
+   "question": "提取隶属于某 Job 的全部 Pod 名称时，`--output=jsonpath` 后跟的表达式是什么？",
+   "answer_keywords": [
+    "{.items[*].metadata.name}"
+   ],
+   "evidence_quote": "`--output=jsonpath` 选项给出了一个表达式，用来从返回的列表中提取每个 Pod 的 name 字段。",
+   "chunk_id": "a692052fda-431",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "运行示例 Job",
+   "page_label": "第 2 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E092",
+   "kind": "fact",
+   "question": "查看名为 pi 的 Job 的日志，可直接使用的命令是什么？",
+   "answer_keywords": [
+    "kubectl logs jobs/pi"
+   ],
+   "evidence_quote": "另外一种查看 Job 日志的方法：kubectl logs jobs/pi",
+   "chunk_id": "a692052fda-431",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "运行示例 Job",
+   "page_label": "第 2 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E093",
+   "kind": "fact",
+   "question": "当不设置 spec.completions 时，其默认值是多少？",
+   "answer_keywords": [
+    "1"
+   ],
+   "evidence_quote": "所有 Pod 都应启动退出过程。对于**非并行**的 Job，你可以不设置 `spec.completions` 和 `spec.parallelism`。\n这两个属性都不设置时，均取默认值 1。",
+   "chunk_id": "6d6130eaf7-487",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "Job 的并行执行",
+   "page_label": "第 7 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E094",
+   "kind": "fact",
+   "question": "带工作队列的并行 Job 中，若未设置 spec.completions，其默认值是什么？",
+   "answer_keywords": [
+    ".spec.parallelism"
+   ],
+   "evidence_quote": "- 不设置 `spec.completions`，默认值为 `.spec.parallelism`。",
+   "chunk_id": "6d6130eaf7-487",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "Job 的并行执行",
+   "page_label": "第 7 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E095",
+   "kind": "fact",
+   "question": "Job 中任何 Pod 成功终止后，是否还会创建新 Pod？",
+   "answer_keywords": [
+    "不再创建新 Pod"
+   ],
+   "evidence_quote": "- 当 Job 中**任何** Pod 成功终止，不再创建新 Pod。",
+   "chunk_id": "6d6130eaf7-487",
+   "source_file": "concepts__workloads__controllers__job.md",
+   "section": "Job 的并行执行",
+   "page_label": "第 7 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E096",
+   "kind": "fact",
+   "question": "当节点异常状态恢复正常时，谁能够移除相关污点？",
+   "answer_keywords": [
+    "kubelet 或节点控制器"
+   ],
+   "evidence_quote": "如果异常状态恢复正常，kubelet 或节点控制器能够移除相关的污点。",
+   "chunk_id": "939088392a-481",
+   "source_file": "concepts__scheduling-eviction__taint-and-toleration.md",
+   "section": "基于污点的驱逐",
+   "page_label": "第 6 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E097",
+   "kind": "fact",
+   "question": "Pod 的 tolerationSeconds 用于指定什么？",
+   "answer_keywords": [
+    "Pod 维系与该节点间绑定关系的时长"
+   ],
+   "evidence_quote": "你可以为 Pod 设置 `tolerationSeconds`，以指定当节点失效或者不响应时，Pod 维系与该节点间绑定关系的时长。",
+   "chunk_id": "939088392a-481",
+   "source_file": "concepts__scheduling-eviction__taint-and-toleration.md",
+   "section": "基于污点的驱逐",
+   "page_label": "第 6 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E098",
+   "kind": "fact",
+   "question": "生产环境中建议使用的 etcd 集群成员数量是多少？",
+   "answer_keywords": [
+    "五个"
+   ],
+   "evidence_quote": "建议在生产环境中使用五个成员的集群。",
+   "chunk_id": "94a9008390-407",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "多节点 etcd 集群",
+   "page_label": "第 8 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E099",
+   "kind": "fact",
+   "question": "kubeadm 工具默认如何安装 etcd？",
+   "answer_keywords": [
+    "安装 etcd 的静态 Pod"
+   ],
+   "evidence_quote": "`kubeadm` 工具默认会安装 etcd 的静态 Pod，",
+   "chunk_id": "94a9008390-407",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "多节点 etcd 集群",
+   "page_label": "第 8 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E100",
+   "kind": "fact",
+   "question": "etcd 集群可以通过哪两种方式配置？",
+   "answer_keywords": [
+    "静态成员信息或动态发现"
+   ],
+   "evidence_quote": "你可以通过静态成员信息或动态发现的方式配置 etcd 集群。",
+   "chunk_id": "94a9008390-407",
+   "source_file": "tasks__administer-cluster__configure-upgrade-etcd.md",
+   "section": "多节点 etcd 集群",
+   "page_label": "第 8 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E101",
+   "kind": "fact",
+   "question": "容器重启后，kubectl get pod 输出中哪个字段的值会增加 1？",
+   "answer_keywords": [
+    "RESTARTS"
+   ],
+   "evidence_quote": "输出结果显示 `RESTARTS` 的值增加了 1。",
+   "chunk_id": "ddf6a90505-347",
+   "source_file": "tasks__configure-pod-container__configure-liveness-readiness-startup-probes.md",
+   "section": "定义一个存活态 HTTP 请求接口",
+   "page_label": "第 3-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E102",
+   "kind": "fact",
+   "question": "文档中提到的存活探测的另一种方式是什么？",
+   "answer_keywords": [
+    "HTTP GET 请求"
+   ],
+   "evidence_quote": "另外一种类型的存活探测方式是使用 HTTP GET 请求。",
+   "chunk_id": "ddf6a90505-347",
+   "source_file": "tasks__configure-pod-container__configure-liveness-readiness-startup-probes.md",
+   "section": "定义一个存活态 HTTP 请求接口",
+   "page_label": "第 3-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E103",
+   "kind": "fact",
+   "question": "示例 Pod 中容器使用的镜像地址是什么？",
+   "answer_keywords": [
+    "registry.k8s.io/e2e-test-images/agnhost"
+   ],
+   "evidence_quote": "下面是一个 Pod 的配置文件，其中运行一个基于`registry.k8s.io/e2e-test-images/agnhost` 镜像的容器。",
+   "chunk_id": "ddf6a90505-347",
+   "source_file": "tasks__configure-pod-container__configure-liveness-readiness-startup-probes.md",
+   "section": "定义一个存活态 HTTP 请求接口",
+   "page_label": "第 3-4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E104",
+   "kind": "fact",
+   "question": "当集群中没有默认 StorageClass 时，Kubernetes 能否为需要 StorageClass 的 PVC 应用默认值？",
+   "answer_keywords": [
+    "无法"
+   ],
+   "evidence_quote": "如果你没有将任何 StorageClass 标记为默认（例如，云服务提供商还没有为你设置默认值），那么Kubernetes 将无法为需要 StorageClass 的 PersistentVolumeClaim 应用默认值。",
+   "chunk_id": "63f01f4187-447",
+   "source_file": "concepts__storage__storage-classes.md",
+   "section": "默认 StorageClass",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E105",
+   "kind": "fact",
+   "question": "在创建 PVC 时不指定 `storageClassName`，且集群中无默认 StorageClass 时，该 PVC 的 `storageClassName` 状态如何？",
+   "answer_keywords": [
+    "将保持不设置"
+   ],
+   "evidence_quote": "在这种情况下，新的 PVC会按照你定义的方式进行创建，并且该 PVC 的 `storageClassName` 将保持不设置，直到有可用的默认 StorageClass 为止。",
+   "chunk_id": "63f01f4187-447",
+   "source_file": "concepts__storage__storage-classes.md",
+   "section": "默认 StorageClass",
+   "page_label": "第 4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E106",
+   "kind": "fact",
+   "question": "Kubernetes 允许存在多个默认 StorageClass 的主要原因是什么？",
+   "answer_keywords": [
+    "了无缝迁移"
+   ],
+   "evidence_quote": "Kubernetes 允许你拥有多个默认 StorageClass 的原因是为了无缝迁移。",
+   "chunk_id": "63f01f4187-447",
+   "source_file": "concepts__storage__storage-classes.md",
+   "section": "默认 StorageClass",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E107",
+   "kind": "fact",
+   "question": "抢占在 Kubernetes 中指的是什么过程？",
+   "answer_keywords": [
+    "终止低优先级的Pod 以便高优先级的 Pod 可以调度到 Node 上的过程。"
+   ],
+   "evidence_quote": "抢占（Preemption）指的是终止低优先级的Pod 以便高优先级的 Pod 可以调度到 Node 上的过程。",
+   "chunk_id": "ff5101edef-373",
+   "source_file": "concepts__scheduling-eviction___index.md",
+   "section": "Pod 干扰",
+   "page_label": "第 2-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E108",
+   "kind": "fact",
+   "question": "驱逐发生在什么情况下？",
+   "answer_keywords": [
+    "在资源匮乏的节点上"
+   ],
+   "evidence_quote": "驱逐（Eviction）是在资源匮乏的节点上，主动让一个或多个 Pod 失效的过程。",
+   "chunk_id": "ff5101edef-373",
+   "source_file": "concepts__scheduling-eviction___index.md",
+   "section": "Pod 干扰",
+   "page_label": "第 2-4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E109",
+   "kind": "fact",
+   "question": "kube-scheduler 的核心功能是什么？",
+   "answer_keywords": [
+    "选择一个最佳节点来运行新创建的或尚未调度（unscheduled）的 Pod。"
+   ],
+   "evidence_quote": "Kube-scheduler 选择一个最佳节点来运行新创建的或尚未调度（unscheduled）的 Pod。",
+   "chunk_id": "7a81dcb9fd-499",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler 中的节点选择",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E110",
+   "kind": "fact",
+   "question": "当没有任何节点满足 Pod 的资源请求时，Pod 会处于什么状态？",
+   "answer_keywords": [
+    "未调度状态"
+   ],
+   "evidence_quote": "如果没有任何一个节点能满足 Pod 的资源请求，那么这个 Pod 将一直停留在未调度状态直到调度器能够找到合适的 Node。",
+   "chunk_id": "7a81dcb9fd-499",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler 中的节点选择",
+   "page_label": "第 4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E111",
+   "kind": "fact",
+   "question": "调度器将调度决定通知 kube-apiserver 的过程被称为什么？",
+   "answer_keywords": [
+    "绑定"
+   ],
+   "evidence_quote": "调度器将这个调度决定通知给kube-apiserver，这个过程叫做**绑定**。",
+   "chunk_id": "7a81dcb9fd-499",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler 中的节点选择",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E112",
+   "kind": "fact",
+   "question": "Ingress 提供从集群外部到集群内服务的什么协议路由？",
+   "answer_keywords": [
+    "HTTP 和 HTTPS"
+   ],
+   "evidence_quote": "Ingress提供从集群外部到集群内服务的HTTP 和 HTTPS 路由。",
+   "chunk_id": "1fb27e5a8f-445",
+   "source_file": "concepts__services-networking__ingress.md",
+   "section": "环境准备",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E113",
+   "kind": "fact",
+   "question": "Ingress 的流量路由由什么资源所定义的规则来控制？",
+   "answer_keywords": [
+    "Ingress 资源"
+   ],
+   "evidence_quote": "流量路由由 Ingress 资源所定义的规则来控制。",
+   "chunk_id": "1fb27e5a8f-445",
+   "source_file": "concepts__services-networking__ingress.md",
+   "section": "环境准备",
+   "page_label": "第 4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E114",
+   "kind": "fact",
+   "question": "NetworkPolicy 中的 ipBlock 选择器适用于什么类型的 IP 地址？",
+   "answer_keywords": [
+    "集群外部 IP"
+   ],
+   "evidence_quote": "这些应该是集群外部 IP，因为 Pod IP 存在时间短暂的且随机产生。",
+   "chunk_id": "cc1e2998e2-422",
+   "source_file": "concepts__services-networking__network-policies.md",
+   "section": "选择器 `to` 和 `from` 的行为",
+   "page_label": "第 6 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E115",
+   "kind": "fact",
+   "question": "为什么 ipBlock 不适用于 Pod IP？",
+   "answer_keywords": [
+    "Pod IP 存在时间短暂的且随机产生"
+   ],
+   "evidence_quote": "这些应该是集群外部 IP，因为 Pod IP 存在时间短暂的且随机产生。",
+   "chunk_id": "cc1e2998e2-422",
+   "source_file": "concepts__services-networking__network-policies.md",
+   "section": "选择器 `to` 和 `from` 的行为",
+   "page_label": "第 6 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "E116",
+   "kind": "fact",
+   "question": "字段选择算符是否支持在 namespace!=default 的情况下使用基于集合的操作符（如 in、notin、exists）？",
+   "answer_keywords": [
+    "不支持"
+   ],
+   "evidence_quote": ".namespace!=default基于集合的操作符（`in`、`notin`、`exists`）不支持字段选择算符。",
+   "chunk_id": "3ed878374f-474",
+   "source_file": "concepts__overview__working-with-objects__field-selectors.md",
+   "section": "多种资源类型",
+   "page_label": "第 7-8 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E117",
+   "kind": "fact",
+   "question": "要筛选所有不在 default 命名空间中的 StatefulSet 和 Service，应使用的 kubectl 字段选择算符表达式是什么？",
+   "answer_keywords": [
+    "metadata.namespace!=default"
+   ],
+   "evidence_quote": "下面这个 `kubectl` 命令将筛选出所有不在 `default` 命名空间中的StatefulSet 和 Service：kubectl get statefulsets,services --all-namespaces --field-selector metadata.namespace!=default",
+   "chunk_id": "3ed878374f-474",
+   "source_file": "concepts__overview__working-with-objects__field-selectors.md",
+   "section": "多种资源类型",
+   "page_label": "第 7-8 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E118",
+   "kind": "fact",
+   "question": "Kubernetes 中调度是指什么？",
+   "answer_keywords": [
+    "将 Pod放置到合适的节点上"
+   ],
+   "evidence_quote": "在 Kubernetes 中，**调度**是指将 Pod放置到合适的节点上，以便对应节点上的能够运行这些 Pod。",
+   "chunk_id": "964d6966b1-386",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler",
+   "page_label": "第 2-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E119",
+   "kind": "fact",
+   "question": "kube-scheduler 是 Kubernetes 集群的什么组件？",
+   "answer_keywords": [
+    "默认调度器"
+   ],
+   "evidence_quote": "kube-scheduler是 Kubernetes 集群的默认调度器，并且是集群控制面 的一部分。",
+   "chunk_id": "964d6966b1-386",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler",
+   "page_label": "第 2-4 页",
+   "difficulty": "easy",
+   "note": ""
+  },
+  {
+   "id": "E120",
+   "kind": "fact",
+   "question": "kube-scheduler 在设计上允许用户做什么？",
+   "answer_keywords": [
+    "自己编写一个调度组件并替换原有的 kube-scheduler"
+   ],
+   "evidence_quote": "如果你真的希望或者有这方面的需求，kube-scheduler在设计上允许你自己编写一个调度组件并替换原有的 kube-scheduler。",
+   "chunk_id": "964d6966b1-386",
+   "source_file": "concepts__scheduling-eviction__kube-scheduler.md",
+   "section": "kube-scheduler",
+   "page_label": "第 2-4 页",
+   "difficulty": "medium",
+   "note": ""
+  },
+  {
+   "id": "R001",
+   "kind": "refuse",
+   "question": "Kubernetes 项目的许可证编号是什么",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R002",
+   "kind": "refuse",
+   "question": "Kubernetes 1.20 版本的发布日期是哪天",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R003",
+   "kind": "refuse",
+   "question": "kube-apiserver 的 CVE 漏洞编号有哪些",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R004",
+   "kind": "refuse",
+   "question": "Kubernetes 中国区的商业支持代理商是哪家",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R005",
+   "kind": "refuse",
+   "question": "kubectl 的源码是用哪种语言写的，有多少行",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R006",
+   "kind": "refuse",
+   "question": "Kubernetes 商标的注册号是多少",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R007",
+   "kind": "refuse",
+   "question": "CNCF 基金会 2024 年的年度预算",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R008",
+   "kind": "refuse",
+   "question": "Kubernetes 创始人 Linus Torvalds 的出生地",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R009",
+   "kind": "refuse",
+   "question": "etcd 使用的 Raft 协议是第几版规范",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  },
+  {
+   "id": "R010",
+   "kind": "refuse",
+   "question": "Pod 在 AWS us-east-1 区域的默认可用区",
+   "answer_keywords": [],
+   "evidence_quote": "",
+   "chunk_id": "",
+   "source_file": "",
+   "section": "",
+   "page_label": "",
+   "difficulty": "medium",
+   "note": "语料不覆盖该主题，应拒答"
+  }
+ ]
+}
