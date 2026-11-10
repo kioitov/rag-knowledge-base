@@ -39,3 +39,8 @@ GITHUB-*.md
 
 # 阶段报告，不公开
 stage2/STAGE2-*.md
+stage3/STAGE3-*.md
+
+# 向量库产物（可重建，不入库）
+data/chroma/
+data/_probe_chroma/

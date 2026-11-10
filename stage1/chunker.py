@@ -59,9 +59,16 @@ class Chunk:
 
     def __post_init__(self) -> None:
         if not self.chunk_id:
-            self.chunk_id = hashlib.md5(
-                f"{self.source_file}|{self.pages}|{self.text[:80]}".encode()
-            ).hexdigest()[:10]
+            # 哈希必须覆盖全文，不能只看前缀。
+            # 实测踩过的坑：两份文档都有「0.4 参考文档」表格，前 80 字符相同，
+            # 只哈希前缀会导致 chunk_id 碰撞 —— Chroma 写入时报
+            # DuplicateIDError，4 个块被算成 2 个 id。
+            # 同一份文档里两个相同的小表格也会撞。
+            digest = hashlib.md5(
+                f"{self.source_file}|{self.pages}|{self.text}".encode()
+            ).hexdigest()
+            # 保留 10 位可读性够用，同时把长度拼进去进一步降低碰撞概率
+            self.chunk_id = f"{digest[:10]}-{len(self.text)}"
 
     @property
     def page(self) -> int:
