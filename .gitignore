@@ -64,3 +64,6 @@ data/chroma_eval_*/
 data/eval/results/
 # 阶段报告
 stage5/STAGE5-*.md
+
+# 裁判明细（含回答原文，体积大）
+data/eval/results/judge*.json
