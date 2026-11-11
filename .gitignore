@@ -70,3 +70,6 @@ data/eval/results/judge*.json
 
 # 部署测试截图
 deploy/shots/
+
+# 部署打包产物（本地生成，可重建）
+deploy_pkg/

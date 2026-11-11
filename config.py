@@ -45,6 +45,37 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
 
+# Streamlit Cloud / 魔搭创空间等平台把密钥注入 st.secrets，
+# 而不是提供 .env 文件。这里在没有 .env 时尝试从 st.secrets 同步到环境变量，
+# 让下游所有 `os.getenv(...)` 的代码不用改。
+# 存在的意义：部署包里不带 .env（那会泄露密钥），只能靠平台注入。
+def _sync_from_streamlit_secrets() -> None:
+    if ENV_FILE.exists():
+        return  # 本地有 .env，优先用它
+    try:
+        import streamlit as st  # type: ignore
+        secrets = getattr(st, "secrets", None)
+        if not secrets:
+            return
+        # 只同步已知的几个键，避免把无关配置塞进环境
+        for key in (
+            "DASHSCOPE_API_KEY", "LLM_API_KEY", "LLM_BASE_URL", "LLM_MODEL",
+            "LLM_PROVIDER", "EMBEDDING_MODEL", "EMBEDDING_DIM",
+            "EMBEDDING_BASE_URL", "EMBEDDING_API_KEY",
+        ):
+            try:
+                val = secrets[key]
+            except Exception:
+                continue
+            if val and not os.getenv(key):
+                os.environ[key] = str(val)
+    except Exception:
+        # streamlit 未安装 / 不在 runtime / secrets 未配置，都静默跳过
+        pass
+
+
+_sync_from_streamlit_secrets()
+
 # ---------------------------------------------------------------------------
 # 服务商预设
 # ---------------------------------------------------------------------------
