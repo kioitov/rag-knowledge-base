@@ -247,23 +247,51 @@ def main() -> None:
         st.session_state.messages = []
 
     def render_meta(meta: dict) -> None:
-        """渲染来源。区分「被引用的」和「检索到但没用的」。"""
+        """渲染来源。区分「被引用的」和「检索到但没用的」。
+
+        ---------------------------- 为什么加一行前置摘要 ----------------------------
+        实测发现：回答比较长时（比如列出了四种安装方法），来源折叠区会被挤出
+        可视区域，用户根本看不到下面还有来源。截图确认过这个现象。
+
+        这对「可溯源」是致命的：用户以为系统没给来源，实际上给了但看不见。
+
+        所以先渲染一行**紧凑的摘要**（一行字，不含折叠），
+        再渲染可展开的明细。摘要保证「一定有可见的溯源信息」。
+        """
         sources = meta.get("sources", [])
-        if sources:
-            cited = [s for s in sources if s.get("cited")]
-            uncited = [s for s in sources if not s.get("cited")]
-            if cited:
-                with st.expander(f"📎 引用的来源（{len(cited)} 条）", expanded=True):
-                    for s in cited:
-                        line = f"**[{s['index']}]** 《{s['file']}》 {s['page']}"
-                        if s.get("section"):
-                            line += f" · {s['section']}"
-                        st.markdown(line)
-            if uncited:
-                with st.expander(f"🔍 检索到但未被引用（{len(uncited)} 条）"):
-                    st.caption("这些段落被检索出来了，但模型回答时没有用到。")
-                    for s in uncited:
-                        st.markdown(f"[{s['index']}] 《{s['file']}》 {s['page']}")
+        if not sources:
+            return
+
+        cited = [s for s in sources if s.get("cited")]
+        uncited = [s for s in sources if not s.get("cited")]
+
+        # ---- 前置摘要：一行，始终可见 ----
+        if cited:
+            files = []
+            for s in cited:
+                f = s["file"]
+                if f not in files:
+                    files.append(f)
+            pages = "、".join(s["page"] for s in cited[:3])
+            tail = f" 等 {len(cited)} 条" if len(cited) > 3 else ""
+            st.caption(f"📎 来源：{' / '.join(files[:2])} · {pages}{tail}")
+        else:
+            st.caption("⚠️ 本次回答未引用任何来源")
+
+        # ---- 明细：可展开 ----
+        if cited:
+            with st.expander(f"查看引用明细（{len(cited)} 条）", expanded=False):
+                for s in cited:
+                    line = f"**[{s['index']}]** 《{s['file']}》 {s['page']}"
+                    if s.get("section"):
+                        line += f" · {s['section']}"
+                    st.markdown(line)
+
+        if uncited:
+            with st.expander(f"检索到但未被引用（{len(uncited)} 条）"):
+                st.caption("这些段落被检索出来了，但模型回答时没有用到。")
+                for s in uncited:
+                    st.markdown(f"[{s['index']}] 《{s['file']}》 {s['page']}")
 
         if show_debug:
             parts = []
