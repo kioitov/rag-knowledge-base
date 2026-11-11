@@ -73,3 +73,8 @@ deploy/shots/
 
 # 部署打包产物（本地生成，可重建）
 deploy_pkg/
+
+deploy/test_online*.py
+
+# 数据库备份
+*.sqlite3.bak

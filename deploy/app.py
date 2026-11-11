@@ -59,7 +59,28 @@ import streamlit as st
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-_ROOT = Path(__file__).resolve().parent.parent
+# ---------------------------------------------------------------------------
+# 定位项目根目录
+# ---------------------------------------------------------------------------
+# 这个文件要在两种位置都能跑：
+#   本地开发：deploy/app.py        → 根目录是 parent.parent
+#   魔搭云端：app.py 在仓库根目录   → 根目录是 parent
+#
+# 平台强制要求入口文件叫 app.py 且放在根目录，所以部署时必须搬上去。
+# 判断依据：如果当前目录下已经有 stage1/ 和 data/，说明自己就在根目录。
+_THIS_DIR = Path(__file__).resolve().parent
+
+
+def _find_root() -> Path:
+    """从当前文件位置往上找，第一个同时含 stage1/ 和 data/ 的目录就是根。"""
+    for cand in (_THIS_DIR, _THIS_DIR.parent, _THIS_DIR.parent.parent):
+        if (cand / "stage1").is_dir() and (cand / "data").is_dir():
+            return cand
+    # 兜底：按部署到子目录的老规则
+    return _THIS_DIR.parent
+
+
+_ROOT = _find_root()
 sys.path.insert(0, str(_ROOT))
 sys.path.insert(0, str(_ROOT / "stage1"))
 sys.path.insert(0, str(_ROOT / "stage2"))
